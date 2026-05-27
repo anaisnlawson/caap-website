@@ -1,0 +1,139 @@
+.timeline-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+
+.timeline-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.timeline-hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  color: #64748b;
+}
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  padding-left: 3rem;
+}
+
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  left: 1.5rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, #10b981, #3b82f6, #8b5cf6);
+  border-radius: 4px;
+  transform: translateX(-50%);
+}
+
+.timeline-card {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  position: relative;
+}
+
+.timeline-marker {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: absolute;
+  left: -3rem;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 6px white, 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-emoji {
+  font-size: 1.5rem;
+}
+
+.timeline-content {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+  transform: translateX(5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-month {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.timeline-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+}
+
+.timeline-content h3 {
+  font-family: 'Poppins', sans-serif;
+  color: #1e293b;
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.timeline-content p {
+  font-family: 'Inter', sans-serif;
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .timeline-hero h1 {
+    font-size: 2rem;
+  }
+
+  .timeline-container {
+    padding-left: 2.5rem;
+  }
+
+  .timeline-marker {
+    width: 40px;
+    height: 40px;
+    left: -2.5rem;
+  }
+
+  .timeline-emoji {
+    font-size: 1.2rem;
+  }
+}

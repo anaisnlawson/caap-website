@@ -1,0 +1,61 @@
+.footer {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+  color: white;
+  padding: 3rem 2rem;
+  margin-top: auto;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-logo {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  color: #f59e0b;
+}
+
+.footer-brand p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.footer-info {
+  text-align: right;
+}
+
+.footer-info p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.footer-copy {
+  opacity: 0.6;
+  font-size: 0.8rem !important;
+  margin-top: 0.5rem !important;
+}
+
+@media (max-width: 768px) {
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-info {
+    text-align: center;
+  }
+}

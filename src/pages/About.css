@@ -1,0 +1,89 @@
+.about {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+
+.about-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about-hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
+.about-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.benefit-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1e3a8a, #3b82f6, #f59e0b);
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(30, 58, 138, 0.15);
+}
+
+.benefit-emoji {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.benefit-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.3rem;
+  color: #1e3a8a;
+  margin: 0 0 0.75rem 0;
+}
+
+.benefit-card p {
+  font-family: 'Inter', sans-serif;
+  color: #475569;
+  line-height: 1.7;
+  font-size: 1rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .about-hero h1 {
+    font-size: 2rem;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
