@@ -245,7 +245,7 @@ export default function Curriculum() {
 
       <section className="weekly-structure">
         <h2>📅 Weekly Structure</h2>
-        <p className="structure-subtitle">2 – 2.5 hours per session</p>
+        <p className="structure-subtitle">3 hours per session</p>
         <div className="structure-grid">
           <div className="structure-block">
             <span className="structure-time">30 min</span>
