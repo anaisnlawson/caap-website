@@ -6,7 +6,7 @@ export default function Home() {
     <div className="home">
       <section className="hero">
         <div className="hero-content">
-          <div className="hero-badge">🎓 Summer 2025</div>
+          <div className="hero-badge">🎓 Summer 2026</div>
           <h1>
             <span className="hero-c">C</span>ollege{' '}
             <span className="hero-a">A</span>pplication{' '}
