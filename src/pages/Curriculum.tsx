@@ -153,17 +153,6 @@ export default function Curriculum() {
             'LinkedIn basics workshop',
           ],
         },
-        {
-          icon: '🚨',
-          title: 'Additional Areas',
-          items: [
-            'FAFSA Completion Night (with guardians) — walk families through FAFSA live',
-            'College Transition Skills — emailing professors, office hours, time management',
-            'Imposter syndrome discussion + mental health resources',
-            'Application Logistics — deadlines tracker, EA vs ED, fee waivers, test scores',
-            'Parent/Guardian Session — explain financial aid packages, myths, and ROI',
-          ],
-        },
       ],
     },
   ];
@@ -255,7 +244,7 @@ export default function Curriculum() {
       </div>
 
       <section className="weekly-structure">
-        <h2>📅 Suggested Weekly Structure</h2>
+        <h2>📅 Weekly Structure</h2>
         <p className="structure-subtitle">2 – 2.5 hours per session</p>
         <div className="structure-grid">
           <div className="structure-block">
