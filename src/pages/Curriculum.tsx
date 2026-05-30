@@ -28,9 +28,9 @@ export default function Curriculum() {
       color: '#3b82f6',
       subtitle: 'Foundation Week',
       goals: [
-        'Help students clarify why they\'re going to college',
-        'Build a smart college list',
-        'Start personal statement drafting',
+        'Learn more about what colleges are out there',
+        'Build a college interest list and identify attributes you look for in a college',
+        'Start essay and personal statement drafting',
       ],
       sections: [
         {
