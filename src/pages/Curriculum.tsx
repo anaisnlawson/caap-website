@@ -97,7 +97,6 @@ export default function Curriculum() {
       title: 'Paying for College — Scholarships + Fly-In Programs',
       emoji: '💰',
       color: '#f59e0b',
-      subtitle: 'Critical for low-income students',
       goals: [
         'Remove financial fear',
         'Increase access to elite schools via fly-ins',
