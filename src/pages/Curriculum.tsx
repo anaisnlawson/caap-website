@@ -98,9 +98,9 @@ export default function Curriculum() {
       emoji: '💰',
       color: '#f59e0b',
       goals: [
-        'Remove financial fear',
-        'Increase access to elite schools via fly-ins',
-        'Create scholarship tracking system',
+        'Gain exposure to financial support options for college',
+        'Explore fly-in program opportunities at colleges across the country',
+        'Learn how to organize and track scholarships and deadlines',
       ],
       sections: [
         {
@@ -108,7 +108,7 @@ export default function Curriculum() {
           title: 'Fly-In Programs (Access Strategy)',
           items: [
             'How fly-in programs cover travel + lodging',
-            'Using fly-ins to demonstrate interest & increase admissions odds',
+            'Using fly-ins to demonstrate interest and strengthen your application',
             'Experiencing campus culture firsthand',
             'Where to find fly-in programs',
             'How to write strong fly-in essays',
@@ -125,7 +125,7 @@ export default function Curriculum() {
             'Creating a scholarship tracker spreadsheet',
             'Writing reusable scholarship essays',
             'Understanding financial aid award letters',
-            'Platforms: QuestBridge, Jack Kent Cooke Foundation, The Gates Scholarship',
+            'Platforms to explore: QuestBridge, Jack Kent Cooke Foundation, The Gates Scholarship, and more',
           ],
         },
       ],
