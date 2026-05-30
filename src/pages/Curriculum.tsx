@@ -94,7 +94,7 @@ export default function Curriculum() {
     {
       week: 3,
       date: 'July 25',
-      title: 'Paying for College — Scholarships + Fly-In Programs',
+      title: 'Expanding Access — Fly-In Programs + Scholarships',
       emoji: '💰',
       color: '#f59e0b',
       goals: [
