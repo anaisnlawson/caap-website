@@ -38,6 +38,27 @@
   color: #94a3b8;
 }
 
+.week-deck-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(30, 58, 138, 0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.week-deck-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(30, 58, 138, 0.28);
+}
+
 /* Week cards — accordion style */
 .weeks-list {
   display: flex;

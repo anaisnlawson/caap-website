@@ -14,6 +14,7 @@ interface WeekData {
   emoji: string;
   color: string;
   subtitle?: string;
+  deck?: string;
   goals: string[];
   sections: WeekSection[];
 }
@@ -27,6 +28,7 @@ export default function Curriculum() {
       emoji: '🏫',
       color: '#3b82f6',
       subtitle: 'Foundation Week',
+      deck: '/decks/week1-college-strategy.html',
       goals: [
         'Learn more about what colleges are out there',
         'Build a college interest list and identify attributes you look for in a college',
@@ -222,6 +224,18 @@ export default function Curriculum() {
                   ))}
                 </ul>
               </div>
+
+              {w.deck && (
+                <a
+                  className="week-deck-link"
+                  href={w.deck}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ background: w.color }}
+                >
+                  📊 View Workshop Slides →
+                </a>
+              )}
 
               <div className="sections-grid">
                 {w.sections.map((section, si) => (
