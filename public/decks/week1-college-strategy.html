@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 1 · College Strategy + Personal Narrative — CAAP</title>
+<style>
+  :root {
+    --blue: #3b82f6;
+    --blue-dark: #1e3a8a;
+    --blue-mid: #1d4ed8;
+    --slate-900: #1e293b;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-400: #94a3b8;
+    --bg: #f8fafc;
+    --reach: #ef4444;
+    --target: #f59e0b;
+    --likely: #10b981;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #0b1220;
+    color: var(--slate-900);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .deck { position: fixed; inset: 0; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6vh 9vw 9vh;
+    background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+    overflow: auto;
+  }
+  .slide.active { display: flex; animation: fade .4s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  .slide.title-slide {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+    color: white; align-items: flex-start;
+  }
+  .badge {
+    display: inline-block; background: rgba(255,255,255,.15);
+    padding: .5rem 1.1rem; border-radius: 999px; font-weight: 600;
+    font-size: 1rem; margin-bottom: 1.5rem; letter-spacing: .02em;
+  }
+  .title-slide h1 { font-size: clamp(2.2rem, 5.5vw, 4rem); line-height: 1.05; }
+  .title-slide .sub { font-size: clamp(1.1rem, 2.2vw, 1.6rem); margin-top: 1.2rem; opacity: .92; max-width: 30ch; }
+  .title-slide .meta { margin-top: 2.4rem; font-size: 1.05rem; opacity: .85; }
+
+  .eyebrow { color: var(--blue); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; font-size: .95rem; margin-bottom: .6rem; }
+  h2 { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--blue-dark); line-height: 1.1; margin-bottom: 1.6rem; }
+  .lead { font-size: clamp(1.05rem, 2vw, 1.4rem); color: var(--slate-600); max-width: 60ch; margin-bottom: 1.4rem; }
+  ul { list-style: none; max-width: 64ch; }
+  li { font-size: clamp(1rem, 1.7vw, 1.35rem); color: var(--slate-900); padding: .55rem 0 .55rem 2rem;
+    position: relative; line-height: 1.35; }
+  li::before { content: '▸'; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+  .emoji { font-size: 1.4em; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; max-width: 980px; }
+  .card { background: white; border-radius: 16px; padding: 1.6rem; box-shadow: 0 6px 24px rgba(30,58,138,.08);
+    border-top: 5px solid var(--blue); }
+  .card h3 { font-size: 1.3rem; margin-bottom: .6rem; }
+  .card p { color: var(--slate-500); font-size: 1rem; line-height: 1.4; }
+  .card.reach { border-color: var(--reach); } .card.reach h3 { color: var(--reach); }
+  .card.target { border-color: var(--target); } .card.target h3 { color: #b45309; }
+  .card.likely { border-color: var(--likely); } .card.likely h3 { color: #047857; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem; max-width: 980px; }
+  .two-col h3 { color: var(--blue-dark); font-size: 1.4rem; margin-bottom: .4rem; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
+  .pill { background: rgba(59,130,246,.12); color: var(--blue-mid); font-weight: 600;
+    padding: .5rem 1rem; border-radius: 999px; font-size: 1rem; }
+
+  .quote { font-size: clamp(1.4rem, 3vw, 2.4rem); color: var(--blue-dark); font-weight: 700;
+    line-height: 1.25; max-width: 22ch; }
+  .quote .by { display: block; font-size: 1rem; color: var(--slate-500); font-weight: 500; margin-top: 1.2rem; }
+
+  .progress { position: fixed; bottom: 0; left: 0; height: 6px; background: var(--blue);
+    transition: width .3s ease; z-index: 30; }
+  .nav { position: fixed; bottom: 1.2rem; right: 1.6rem; display: flex; gap: .5rem; align-items: center; z-index: 30; }
+  .nav button { border: none; background: var(--blue-dark); color: white; width: 42px; height: 42px;
+    border-radius: 50%; font-size: 1.2rem; cursor: pointer; opacity: .9; }
+  .nav button:hover { opacity: 1; } .nav button:disabled { opacity: .3; cursor: default; }
+  .counter { position: fixed; bottom: 1.5rem; left: 1.6rem; color: var(--slate-500); font-weight: 600;
+    font-size: .95rem; z-index: 30; }
+  .hint { position: fixed; top: 1rem; right: 1.4rem; color: var(--slate-400); font-size: .8rem; z-index: 30; }
+
+  @media print { .slide { display: flex !important; position: relative; min-height: 100vh; page-break-after: always; }
+    .nav, .progress, .counter, .hint { display: none; } }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1 -->
+  <section class="slide title-slide active">
+    <div class="badge">🏫 Week 1 · Foundation Week</div>
+    <h1>College Strategy +<br>Personal Narrative</h1>
+    <p class="sub">Where you'll go, and the story that gets you there.</p>
+    <p class="meta">College Application Assistance Program · Saturdays 10 AM–1 PM</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="eyebrow">Today's Goals</div>
+    <h2>By the end of today, you will…</h2>
+    <ul>
+      <li>Know what kinds of colleges are out there — and which fit <em>you</em>.</li>
+      <li>Have a balanced college interest list: <strong>Reach · Target · Likely</strong>.</li>
+      <li>Start drafting your personal statement from a real moment in your life.</li>
+      <li>Set up your Common App and join an accountability group.</li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="eyebrow">Mindset</div>
+    <h2>This is a match, not a contest</h2>
+    <p class="lead">Admissions isn't about being "good enough." It's about finding the places where you'll grow — and showing them who you are. We'll start with strategy, then move to your story.</p>
+    <ul>
+      <li>You are more than a GPA and a test score.</li>
+      <li>Every applicant has a narrative — yours just needs the right frame.</li>
+      <li>A smart list lowers stress and raises your odds.</li>
+    </ul>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="eyebrow">Part 1 · College Strategy</div>
+    <h2>Types of colleges</h2>
+    <div class="cards">
+      <div class="card"><h3>Public 🏛️</h3><p>State-funded, large, lower in-state cost.</p></div>
+      <div class="card"><h3>Private 🎓</h3><p>Smaller, often more aid, generous need-based.</p></div>
+      <div class="card"><h3>HBCUs ✊🏾</h3><p>Strong community + legacy of access.</p></div>
+      <div class="card"><h3>Liberal Arts 📖</h3><p>Small classes, broad, close faculty.</p></div>
+      <div class="card"><h3>Comm. College ➡️</h3><p>Transfer pathway, low cost, flexible.</p></div>
+      <div class="card"><h3>"Fit" matters 🎯</h3><p>Size, vibe, cost, distance — not rank.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="eyebrow">College Strategy</div>
+    <h2>What admissions actually weigh</h2>
+    <ul>
+      <li><strong>GPA + rigor</strong> — grades in challenging classes you can handle.</li>
+      <li><strong>Extracurriculars</strong> — depth and impact beat a long list.</li>
+      <li><strong>Essays</strong> — your voice, your story, your "why."</li>
+      <li><strong>Recommendations</strong> — teachers who know you well.</li>
+      <li><strong>Fit</strong> — they want students who'll thrive there.</li>
+    </ul>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="eyebrow">Build a balanced list</div>
+    <h2>Reach · Target · Likely</h2>
+    <div class="cards">
+      <div class="card reach"><h3>Reach</h3><p>Dream schools. Your stats are below or at the low end. Apply to a few.</p></div>
+      <div class="card target"><h3>Target</h3><p>Your numbers fit the typical admit. The heart of your list.</p></div>
+      <div class="card likely"><h3>Likely</h3><p>Strong odds + you'd happily attend. Always include some.</p></div>
+    </div>
+    <p class="lead" style="margin-top:1.6rem">Aim for ~8–12 schools spread across all three.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="eyebrow">Paying for it</div>
+    <h2>FAFSA + CSS Profile</h2>
+    <div class="two-col">
+      <div><h3>FAFSA</h3><ul><li>Free federal aid form</li><li>Grants, loans, work-study</li><li>Required by every school</li></ul></div>
+      <div><h3>CSS Profile</h3><ul><li>Used by many private schools</li><li>Deeper financial picture</li><li>More institutional aid</li></ul></div>
+    </div>
+    <p class="lead" style="margin-top:1.4rem">Cost is a strategy question — never rule a school out before you see your aid.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="eyebrow">Part 2 · Personal Narrative</div>
+    <h2>The essay is not a résumé</h2>
+    <p class="lead">Your grades and activities are already on the application. The essay's job is to make an admissions officer <em>feel</em> who you are. That comes from a story.</p>
+    <ul>
+      <li>650 words, one human, one voice.</li>
+      <li>They read thousands — yours stands out by being <strong>specific</strong>.</li>
+      <li>Show growth, not perfection.</li>
+    </ul>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="eyebrow">From the video</div>
+    <h2>The 5 keys to a great narrative</h2>
+    <ul>
+      <li><strong>Pick a defining moment</strong> — small + everyday is fine.</li>
+      <li><strong>Show growth</strong> — what changed in how you think.</li>
+      <li><strong>Be specific</strong> — details, dialogue, senses. Show, don't tell.</li>
+      <li><strong>Sound like you</strong> — not what you think they want.</li>
+      <li><strong>Connect to the future</strong> — who you'll be on campus.</li>
+    </ul>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide title-slide" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">
+    <div class="badge">Remember</div>
+    <p class="quote">"The best topic isn't the most dramatic — it's the most <em>you</em>."
+      <span class="by">Show a moment. Reflect. Reveal who you are.</span></p>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="eyebrow">Workshop</div>
+    <h2>🛠️ Life Timeline exercise</h2>
+    <p class="lead">List 8–10 moments that shaped you. We mine these for essay ideas.</p>
+    <ul>
+      <li>A turning point or hard decision</li>
+      <li>A time you failed and what you learned</li>
+      <li>Something you fixed, built, or led</li>
+      <li>A belief that changed</li>
+      <li>A relationship or community that shaped you</li>
+    </ul>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="eyebrow">Hands-on today</div>
+    <h2>What we'll set up together</h2>
+    <div class="cards">
+      <div class="card"><h3>📝 College list</h3><p>Build your Reach/Target/Likely worksheet.</p></div>
+      <div class="card"><h3>💻 Common App</h3><p>Create your account, fill basics.</p></div>
+      <div class="card"><h3>🤝 Accountability</h3><p>Form your group — weekly check-ins.</p></div>
+    </div>
+    <div class="pill-row"><span class="pill">Brainstorm 3 topics</span><span class="pill">Draft one opening line</span><span class="pill">Pick a Week-2 goal</span></div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide">
+    <div class="eyebrow">Homework</div>
+    <h2>Before next Saturday</h2>
+    <ul>
+      <li>Finish your college list — at least 8 schools.</li>
+      <li>Write a rough first draft of your personal statement (any length).</li>
+      <li>Pick your favorite Life Timeline moment to expand.</li>
+      <li>Bring questions for 1:1 feedback in Week 2.</li>
+    </ul>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide title-slide">
+    <div class="badge">Up next</div>
+    <h1>Week 2: Essays Deep Dive ✍️</h1>
+    <p class="sub">Drafting, revising, and polishing your personal statement.</p>
+    <p class="meta">You've got this. See you Saturday. 🌟</p>
+  </section>
+
+</div>
+
+<div class="hint">← → to navigate · F fullscreen</div>
+<div class="counter"><span id="cur">1</span> / <span id="total">14</span></div>
+<div class="nav"><button id="prev">‹</button><button id="next">›</button></div>
+<div class="progress" id="bar"></div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  let i = 0;
+  const total = slides.length;
+  document.getElementById('total').textContent = total;
+  function show(n){
+    i = Math.max(0, Math.min(total-1, n));
+    slides.forEach((s,x)=>s.classList.toggle('active', x===i));
+    document.getElementById('cur').textContent = i+1;
+    document.getElementById('bar').style.width = ((i+1)/total*100)+'%';
+    document.getElementById('prev').disabled = i===0;
+    document.getElementById('next').disabled = i===total-1;
+  }
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')show(i+1);
+    if(e.key==='ArrowLeft')show(i-1);
+    if(e.key==='Home')show(0); if(e.key==='End')show(total-1);
+    if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+  });
+  show(0);
+</script>
+</body>
+</html>
