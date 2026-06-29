@@ -95,6 +95,30 @@
     font-size: .95rem; z-index: 30; }
   .hint { position: fixed; top: 1rem; right: 1.4rem; color: var(--slate-400); font-size: .8rem; z-index: 30; }
 
+  /* school photos */
+  .photo-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; max-width: 1000px; margin-top: .4rem; }
+  .photo { border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(30,58,138,.18);
+    background: white; transform: rotate(-1deg); transition: transform .25s; }
+  .photo:nth-child(2){ transform: rotate(1deg); } .photo:nth-child(3){ transform: rotate(-.5deg); }
+  .photo:hover { transform: rotate(0) scale(1.03); }
+  .photo img { width: 100%; height: 200px; object-fit: cover; display: block; }
+  .photo span { display: block; padding: .6rem .8rem; font-weight: 700; color: var(--blue-dark); font-size: 1rem; }
+
+  /* case study */
+  .cs-tag { display:inline-block; background: var(--blue-dark); color:#fff; font-weight:700; letter-spacing:.06em;
+    text-transform:uppercase; font-size:.8rem; padding:.4rem 1rem; border-radius:999px; margin-bottom:.8rem; }
+  .cs-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:1.1rem; max-width:1000px; margin-top:1rem; }
+  .stat { background:white; border-radius:14px; padding:1.3rem 1.5rem; box-shadow:0 6px 22px rgba(30,58,138,.08);
+    border-left:5px solid var(--blue); }
+  .stat .k { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--slate-500); font-weight:700; }
+  .stat .v { font-size:1.6rem; font-weight:800; color:var(--blue-dark); line-height:1.1; margin:.2rem 0; }
+  .stat .v.green { color:#047857; } .stat .v.red { color:#b91c1c; }
+  .stat small { color:var(--slate-500); }
+  .accent-red .eyebrow{color:var(--reach)} .accent-amber .eyebrow{color:#b45309}
+  .accent-green .eyebrow{color:#047857} .accent-purple .eyebrow{color:#7c3aed}
+  .decor { position:absolute; font-size:18rem; opacity:.06; right:-2rem; bottom:-4rem; z-index:0; pointer-events:none; }
+  .slide > * { position: relative; z-index: 1; }
+
   @media print { .slide { display: flex !important; position: relative; min-height: 100vh; page-break-after: always; }
     .nav, .progress, .counter, .hint { display: none; } }
 </style>
@@ -146,67 +170,146 @@
       <div class="card"><h3>Comm. College ➡️</h3><p>Transfer pathway, low cost, flexible.</p></div>
       <div class="card"><h3>"Fit" matters 🎯</h3><p>Size, vibe, cost, distance — not rank.</p></div>
     </div>
-    <p class="lead" style="margin-top:1.4rem">Next: what each type means — and how each handles money. 💰</p>
+    <p class="lead" style="margin-top:1.4rem">Next: each type + a real NYC-area case study with cost, aid &amp; stats. 💰</p>
   </section>
 
   <!-- Public -->
   <section class="slide">
+    <span class="decor">🏛️</span>
     <div class="eyebrow">Type 1 · Public Universities 🏛️</div>
     <h2>State-funded, large, in-state value</h2>
-    <ul>
-      <li>Run by the state — biggest discount if you're a resident.</li>
-      <li>Big campuses, lots of majors, school spirit, research.</li>
-    </ul>
-    <div class="pill-row"><span class="pill">SUNY Buffalo</span><span class="pill">Rutgers</span><span class="pill">UNC Chapel Hill</span></div>
-    <p class="lead" style="margin-top:1.4rem"><strong>💰 Money:</strong> Low in-state tuition + FAFSA grants. Some — like UNC's <em>Carolina Covenant</em> — cover full need with no loans for low-income students. Out-of-state costs more, so weigh aid carefully.</p>
+    <p class="lead">For NYC students, CUNY &amp; SUNY are your in-state superpower — top quality at a fraction of the price.</p>
+    <div class="photo-row">
+      <div class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Hunter_College_North_Building.jpg/960px-Hunter_College_North_Building.jpg" alt="Hunter College"><span>CUNY Hunter College</span></div>
+      <div class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/City_College_of_New_York_November_2016.jpg/960px-City_College_of_New_York_November_2016.jpg" alt="City College"><span>City College of NY</span></div>
+      <div class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Baruch_College_Banners_%284115700873%29.jpg/960px-Baruch_College_Banners_%284115700873%29.jpg" alt="Baruch College"><span>Baruch College</span></div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem"><strong>💰 Money:</strong> NY residents under ~$125K can attend CUNY/SUNY tuition-free via the <em>Excelsior Scholarship</em> + TAP. Easiest place to graduate debt-free.</p>
+  </section>
+
+  <!-- Public case study -->
+  <section class="slide">
+    <span class="cs-tag">📌 Case Study · Hunter College (CUNY)</span>
+    <h2>Manhattan public · ~16,000 undergrads</h2>
+    <div class="cs-grid">
+      <div class="stat"><div class="k">In-state tuition</div><div class="v green">~$7,400/yr</div><small>Often $0 with Excelsior + TAP</small></div>
+      <div class="stat"><div class="k">Out-of-state tuition</div><div class="v">~$15,400/yr</div><small>Still very affordable</small></div>
+      <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.4 · SAT ~1170</div><small>ACT ~25 · ~35% admit rate</small></div>
+      <div class="stat"><div class="k">Known for</div><div class="v">Nursing · Bio · Education</div><small>Free pre-health pipeline</small></div>
+    </div>
   </section>
 
   <!-- Private -->
-  <section class="slide">
+  <section class="slide accent-purple">
+    <span class="decor">🎓</span>
     <div class="eyebrow">Type 2 · Private Universities 🎓</div>
-    <h2>Higher sticker, deeper aid</h2>
+    <h2>Higher sticker, deepest aid</h2>
     <ul>
-      <li>Smaller, big endowments, strong support networks.</li>
-      <li>The list price scares people — but you rarely pay it.</li>
+      <li>Big endowments + strong support — list price scares people, but you rarely pay it.</li>
+      <li>NYC has elite options right at home.</li>
     </ul>
-    <div class="pill-row"><span class="pill">Harvard</span><span class="pill">Columbia</span><span class="pill">USC</span></div>
-    <p class="lead" style="margin-top:1.4rem"><strong>💰 Money:</strong> Wealthy schools meet 100% of need. Families under ~$85K often pay <strong>$0</strong> at Harvard/Columbia. These can be cheaper than public for low-income students — apply, then compare.</p>
+    <div class="pill-row"><span class="pill">Columbia</span><span class="pill">NYU</span><span class="pill">Fordham</span></div>
+    <p class="lead" style="margin-top:1.2rem"><strong>💰 Money:</strong> Wealthy schools meet 100% of need. Families under ~$100K often pay <strong>$0</strong> at Columbia. The <em>easiest place to get a full ride</em> — apply, then compare.</p>
+  </section>
+
+  <!-- Private case study -->
+  <section class="slide accent-purple">
+    <span class="cs-tag">📌 Case Study · Columbia University</span>
+    <h2>Ivy in Morningside Heights · NYC</h2>
+    <div class="cs-grid">
+      <div class="stat"><div class="k">Sticker price</div><div class="v red">~$90,000/yr</div><small>Before aid</small></div>
+      <div class="stat"><div class="k">Low-income family</div><div class="v green">~$0/yr</div><small>Under ~$100K = full ride, no loans</small></div>
+      <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~4.0 · SAT ~1530</div><small>ACT ~34 · ~4% admit rate (reach)</small></div>
+      <div class="stat"><div class="k">Known for</div><div class="v">Eng · Poli-Sci · Journalism</div><small>QuestBridge partner</small></div>
+    </div>
   </section>
 
   <!-- HBCU -->
-  <section class="slide">
+  <section class="slide accent-amber">
+    <span class="decor">✊🏾</span>
     <div class="eyebrow">Type 3 · HBCUs ✊🏾</div>
     <h2>Community, legacy, access</h2>
     <ul>
-      <li>Built to serve Black students; everyone is welcome.</li>
-      <li>Strong mentorship, culture, and alumni networks.</li>
+      <li>Built to serve Black students; everyone is welcome. Strong mentorship + alumni networks.</li>
+      <li>Lower sticker price, but <strong>full rides are harder</strong> — smaller endowments mean less free institutional aid.</li>
     </ul>
     <div class="pill-row"><span class="pill">Howard</span><span class="pill">Spelman</span><span class="pill">Morehouse</span></div>
-    <p class="lead" style="margin-top:1.4rem"><strong>💰 Money:</strong> Lower tuition + many HBCU-specific scholarships (UNCF, Tom Joyner). Active aid offices that work with first-gen + low-income families. Ask about institutional grants early.</p>
+    <p class="lead" style="margin-top:1.2rem"><strong>💰 Money:</strong> Affordable base cost + UNCF/Tom Joyner scholarships, but expect to stack outside scholarships — they meet less of full need than top private schools. Apply early, hunt grants.</p>
+  </section>
+
+  <!-- HBCU case study -->
+  <section class="slide accent-amber">
+    <span class="cs-tag">📌 Case Study · Howard University</span>
+    <h2>D.C. · "The Mecca" · ~10,000 undergrads</h2>
+    <div class="cs-grid">
+      <div class="stat"><div class="k">Total cost (all students)</div><div class="v">~$50,000/yr</div><small>Same in- &amp; out-of-state (private)</small></div>
+      <div class="stat"><div class="k">Aid reality</div><div class="v red">~60–70% of need met</div><small>Full rides competitive — stack scholarships</small></div>
+      <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.5 · SAT ~1200</div><small>ACT ~25 · ~35% admit rate</small></div>
+      <div class="stat"><div class="k">Known for</div><div class="v">Law · Business · Medicine</div><small>#1 producer of Black grad-school applicants</small></div>
+    </div>
   </section>
 
   <!-- Liberal Arts -->
-  <section class="slide">
+  <section class="slide accent-green">
+    <span class="decor">📖</span>
     <div class="eyebrow">Type 4 · Liberal Arts Colleges 📖</div>
     <h2>Small, personal, broad</h2>
     <ul>
-      <li>Tiny classes, close professors, focus on teaching.</li>
-      <li>Great for writing, discussion, and being known by name.</li>
+      <li>Tiny classes, close professors, known by name. Great for writing + discussion.</li>
+      <li>Several are a short trip from NYC.</li>
     </ul>
-    <div class="pill-row"><span class="pill">Amherst</span><span class="pill">Williams</span><span class="pill">Pomona</span></div>
-    <p class="lead" style="margin-top:1.4rem"><strong>💰 Money:</strong> Generous, no-loan aid — Amherst & Pomona meet full need. Smaller schools mean more 1:1 help finding grants. QuestBridge partners with many of them.</p>
+    <div class="pill-row"><span class="pill">Vassar</span><span class="pill">Barnard</span><span class="pill">Colgate</span></div>
+    <p class="lead" style="margin-top:1.2rem"><strong>💰 Money:</strong> Generous no-loan aid — Vassar &amp; Barnard meet full need. Small size = more 1:1 help. Many are QuestBridge partners (also a strong full-ride path).</p>
+  </section>
+
+  <!-- Liberal Arts case study -->
+  <section class="slide accent-green">
+    <span class="cs-tag">📌 Case Study · Vassar College</span>
+    <h2>Poughkeepsie, NY · ~75 min from NYC</h2>
+    <div class="cs-grid">
+      <div class="stat"><div class="k">Sticker price</div><div class="v red">~$85,000/yr</div><small>Same regardless of state (private)</small></div>
+      <div class="stat"><div class="k">Low-income family</div><div class="v green">~$0–5,000/yr</div><small>Meets 100% of need, no loans</small></div>
+      <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.9 · SAT ~1480</div><small>ACT ~33 · ~19% admit rate</small></div>
+      <div class="stat"><div class="k">Known for</div><div class="v">English · Psych · Drama</div><small>Strong arts + first-gen support</small></div>
+    </div>
   </section>
 
   <!-- Community College -->
-  <section class="slide">
+  <section class="slide accent-red">
+    <span class="decor">➡️</span>
     <div class="eyebrow">Type 5 · Community College ➡️</div>
     <h2>Low cost, flexible, transfer path</h2>
     <ul>
-      <li>Two years cheap, then transfer to a 4-year for the degree.</li>
-      <li>Smart way to cut total cost in half.</li>
+      <li>Two years cheap, then transfer to a 4-year for the same degree.</li>
+      <li>NYC has CUNY 2-year colleges everywhere.</li>
     </ul>
-    <div class="pill-row"><span class="pill">Borough of Manhattan CC</span><span class="pill">Santa Monica College</span><span class="pill">Northern Virginia CC</span></div>
-    <p class="lead" style="margin-top:1.4rem"><strong>💰 Money:</strong> Many states offer <strong>free</strong> community college; FAFSA often covers it fully. Transfer scholarships (e.g., Cooke Foundation) reward you for finishing strong. Lowest-debt route.</p>
+    <div class="pill-row"><span class="pill">BMCC</span><span class="pill">LaGuardia CC</span><span class="pill">Queensborough CC</span></div>
+    <p class="lead" style="margin-top:1.2rem"><strong>💰 Money:</strong> FAFSA Pell often covers tuition fully — many pay <strong>$0</strong>. Cooke transfer scholarship rewards finishing strong. Lowest-debt route to any degree.</p>
+  </section>
+
+  <!-- CC case study -->
+  <section class="slide accent-red">
+    <span class="cs-tag">📌 Case Study · BMCC (CUNY)</span>
+    <h2>Tribeca, Manhattan · transfer hub</h2>
+    <div class="cs-grid">
+      <div class="stat"><div class="k">In-state tuition</div><div class="v green">~$4,800/yr</div><small>$0 for most with Pell + TAP</small></div>
+      <div class="stat"><div class="k">Out-of-state tuition</div><div class="v">~$9,200/yr</div><small>Open admission</small></div>
+      <div class="stat"><div class="k">Avg admit profile</div><div class="v">Open door</div><small>HS diploma/GED — all welcome</small></div>
+      <div class="stat"><div class="k">Known for</div><div class="v">Transfer → CUNY 4-yr</div><small>Business, nursing, liberal arts AA</small></div>
+    </div>
+  </section>
+
+  <!-- Aid difficulty -->
+  <section class="slide">
+    <div class="eyebrow">Reality check 💡</div>
+    <h2>Where is a full ride easiest?</h2>
+    <ul>
+      <li><strong>1. CUNY / SUNY (in-state)</strong> — Excelsior + TAP + Pell = $0 for most NYC families.</li>
+      <li><strong>2. Wealthy private + Ivies</strong> — meet 100% of need; under ~$100K often free.</li>
+      <li><strong>3. Top liberal arts</strong> — no-loan aid + QuestBridge full rides.</li>
+      <li><strong>4. HBCUs</strong> — affordable but smaller endowments; expect to <em>stack</em> outside scholarships.</li>
+    </ul>
+    <p class="lead" style="margin-top:1rem">Lesson: apply to a mix — the cheapest path is often a name you didn't expect.</p>
   </section>
 
   <!-- 5 -->
