@@ -229,8 +229,6 @@ export default function Curriculum() {
                 <a
                   className="week-deck-link"
                   href={w.deck}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   style={{ background: w.color }}
                 >
                   📊 View Workshop Slides →
