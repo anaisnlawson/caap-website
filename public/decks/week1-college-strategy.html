@@ -108,6 +108,11 @@
   .cs-tag { display:inline-block; background: var(--blue-dark); color:#fff; font-weight:700; letter-spacing:.06em;
     text-transform:uppercase; font-size:.8rem; padding:.4rem 1rem; border-radius:999px; margin-bottom:.8rem; }
   .cs-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:1.1rem; max-width:1000px; margin-top:1rem; }
+  .cs-body { display:grid; grid-template-columns: 320px 1fr; gap:1.6rem; align-items:start; max-width:1060px; margin-top:.5rem; }
+  .cs-body .cs-grid { margin-top:0; }
+  .cs-photo img { width:100%; height:235px; object-fit:cover; border-radius:16px; display:block;
+    box-shadow:0 10px 30px rgba(30,58,138,.18); }
+  .cs-desc { font-size:1.02rem; color:var(--slate-600); line-height:1.45; margin-top:.9rem; }
   .stat { background:white; border-radius:14px; padding:1.3rem 1.5rem; box-shadow:0 6px 22px rgba(30,58,138,.08);
     border-left:5px solid var(--blue); }
   .stat .k { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--slate-500); font-weight:700; }
@@ -188,12 +193,18 @@
   <!-- Public case study -->
   <section class="slide">
     <span class="cs-tag">📌 Case Study · Hunter College (CUNY)</span>
-    <h2>Manhattan public · ~16,000 undergrads</h2>
-    <div class="cs-grid">
-      <div class="stat"><div class="k">In-state tuition</div><div class="v green">~$7,400/yr</div><small>Often $0 with Excelsior + TAP</small></div>
-      <div class="stat"><div class="k">Out-of-state tuition</div><div class="v">~$15,400/yr</div><small>Still very affordable</small></div>
-      <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.4 · SAT ~1170</div><small>ACT ~25 · ~35% admit rate</small></div>
-      <div class="stat"><div class="k">Known for</div><div class="v">Nursing · Bio · Education</div><small>Free pre-health pipeline</small></div>
+    <h2>Hunter College</h2>
+    <div class="cs-body">
+      <div class="cs-photo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Hunter_College_North_Building.jpg/960px-Hunter_College_North_Building.jpg" alt="Hunter College">
+        <p class="cs-desc">A large public college on Manhattan's Upper East Side and part of the CUNY system — known for affordable access, a commuter campus, and strong health-science programs.</p>
+      </div>
+      <div class="cs-grid">
+        <div class="stat"><div class="k">In-state tuition</div><div class="v green">~$7,400/yr</div><small>Often $0 with Excelsior + TAP</small></div>
+        <div class="stat"><div class="k">Out-of-state tuition</div><div class="v">~$15,400/yr</div><small>Still very affordable</small></div>
+        <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.4 · SAT ~1170</div><small>ACT ~25 · ~35% admit rate</small></div>
+        <div class="stat"><div class="k">Known for</div><div class="v">Nursing · Bio · Education</div><small>Free pre-health pipeline</small></div>
+      </div>
     </div>
   </section>
 
@@ -213,12 +224,18 @@
   <!-- Private case study -->
   <section class="slide accent-purple">
     <span class="cs-tag">📌 Case Study · Columbia University</span>
-    <h2>Ivy in Morningside Heights · NYC</h2>
-    <div class="cs-grid">
-      <div class="stat"><div class="k">Sticker price</div><div class="v red">~$90,000/yr</div><small>Before aid</small></div>
-      <div class="stat"><div class="k">Low-income family</div><div class="v green">~$0/yr</div><small>Under ~$100K = full ride, no loans</small></div>
-      <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~4.0 · SAT ~1530</div><small>ACT ~34 · ~4% admit rate (reach)</small></div>
-      <div class="stat"><div class="k">Known for</div><div class="v">Eng · Poli-Sci · Journalism</div><small>QuestBridge partner</small></div>
+    <h2>Columbia University</h2>
+    <div class="cs-body">
+      <div class="cs-photo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Low_Memorial_Library_Columbia_University_College_Walk_Court_Yard_05.jpg/960px-Low_Memorial_Library_Columbia_University_College_Walk_Court_Yard_05.jpg" alt="Columbia University">
+        <p class="cs-desc">An Ivy League research university in Morningside Heights, Upper Manhattan — need-blind for admissions and meeting 100% of demonstrated financial need with no loans.</p>
+      </div>
+      <div class="cs-grid">
+        <div class="stat"><div class="k">Sticker price</div><div class="v red">~$90,000/yr</div><small>Before aid</small></div>
+        <div class="stat"><div class="k">Low-income family</div><div class="v green">~$0/yr</div><small>Under ~$100K = full ride, no loans</small></div>
+        <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~4.0 · SAT ~1530</div><small>ACT ~34 · ~4% admit rate (reach)</small></div>
+        <div class="stat"><div class="k">Known for</div><div class="v">Eng · Poli-Sci · Journalism</div><small>QuestBridge partner</small></div>
+      </div>
     </div>
   </section>
 
@@ -238,12 +255,18 @@
   <!-- HBCU case study -->
   <section class="slide accent-amber">
     <span class="cs-tag">📌 Case Study · Howard University</span>
-    <h2>Washington, D.C. · ~10,000 undergrads</h2>
-    <div class="cs-grid">
-      <div class="stat"><div class="k">Total cost (all students)</div><div class="v">~$50,000/yr</div><small>Same in- &amp; out-of-state (private)</small></div>
-      <div class="stat"><div class="k">Aid reality</div><div class="v red">~60–70% of need met</div><small>Full rides competitive — stack scholarships</small></div>
-      <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.5 · SAT ~1200</div><small>ACT ~25 · ~35% admit rate</small></div>
-      <div class="stat"><div class="k">Known for</div><div class="v">Law · Business · Medicine</div><small>#1 producer of Black grad-school applicants</small></div>
+    <h2>Howard University</h2>
+    <div class="cs-body">
+      <div class="cs-photo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Founders_Library%2C_Howard_University.jpg/960px-Founders_Library%2C_Howard_University.jpg" alt="Howard University">
+        <p class="cs-desc">A private historically Black research university in Washington, D.C. — one of the most prestigious HBCUs, renowned for producing Black leaders in law, medicine, and business.</p>
+      </div>
+      <div class="cs-grid">
+        <div class="stat"><div class="k">Total cost (all students)</div><div class="v">~$50,000/yr</div><small>Same in- &amp; out-of-state (private)</small></div>
+        <div class="stat"><div class="k">Aid reality</div><div class="v red">~60–70% of need met</div><small>Full rides competitive — stack scholarships</small></div>
+        <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.5 · SAT ~1200</div><small>ACT ~25 · ~35% admit rate</small></div>
+        <div class="stat"><div class="k">Known for</div><div class="v">Law · Business · Medicine</div><small>#1 producer of Black grad-school applicants</small></div>
+      </div>
     </div>
   </section>
 
@@ -263,12 +286,18 @@
   <!-- Liberal Arts case study -->
   <section class="slide accent-green">
     <span class="cs-tag">📌 Case Study · Vassar College</span>
-    <h2>Poughkeepsie, NY · ~75 min from NYC</h2>
-    <div class="cs-grid">
-      <div class="stat"><div class="k">Sticker price</div><div class="v red">~$85,000/yr</div><small>Same regardless of state (private)</small></div>
-      <div class="stat"><div class="k">Low-income family</div><div class="v green">~$0–5,000/yr</div><small>Meets 100% of need, no loans</small></div>
-      <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.9 · SAT ~1480</div><small>ACT ~33 · ~19% admit rate</small></div>
-      <div class="stat"><div class="k">Known for</div><div class="v">English · Psych · Drama</div><small>Strong arts + first-gen support</small></div>
+    <h2>Vassar College</h2>
+    <div class="cs-body">
+      <div class="cs-photo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Vassar_College_Main_Building_2.jpg/960px-Vassar_College_Main_Building_2.jpg" alt="Vassar College">
+        <p class="cs-desc">A small private liberal arts college in Poughkeepsie, NY — about 75 minutes north of the city by train — with tiny classes and generous no-loan financial aid.</p>
+      </div>
+      <div class="cs-grid">
+        <div class="stat"><div class="k">Sticker price</div><div class="v red">~$85,000/yr</div><small>Same regardless of state (private)</small></div>
+        <div class="stat"><div class="k">Low-income family</div><div class="v green">~$0–5,000/yr</div><small>Meets 100% of need, no loans</small></div>
+        <div class="stat"><div class="k">Avg admit profile</div><div class="v">GPA ~3.9 · SAT ~1480</div><small>ACT ~33 · ~19% admit rate</small></div>
+        <div class="stat"><div class="k">Known for</div><div class="v">English · Psych · Drama</div><small>Strong arts + first-gen support</small></div>
+      </div>
     </div>
   </section>
 
@@ -288,12 +317,18 @@
   <!-- CC case study -->
   <section class="slide accent-red">
     <span class="cs-tag">📌 Case Study · BMCC (CUNY)</span>
-    <h2>Tribeca, Manhattan · transfer hub</h2>
-    <div class="cs-grid">
-      <div class="stat"><div class="k">In-state tuition</div><div class="v green">~$4,800/yr</div><small>$0 for most with Pell + TAP</small></div>
-      <div class="stat"><div class="k">Out-of-state tuition</div><div class="v">~$9,200/yr</div><small>Open admission</small></div>
-      <div class="stat"><div class="k">Avg admit profile</div><div class="v">Open door</div><small>HS diploma/GED — all welcome</small></div>
-      <div class="stat"><div class="k">Known for</div><div class="v">Transfer → CUNY 4-yr</div><small>Business, nursing, liberal arts AA</small></div>
+    <h2>Borough of Manhattan Community College</h2>
+    <div class="cs-body">
+      <div class="cs-photo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Tribeca_Bridge_td_%282018-06-09%29_14_-_BMCC.jpg/960px-Tribeca_Bridge_td_%282018-06-09%29_14_-_BMCC.jpg" alt="BMCC">
+        <p class="cs-desc">A CUNY two-year community college in Tribeca, Manhattan — the largest in the system — and a major, low-cost transfer pathway into four-year CUNY degrees.</p>
+      </div>
+      <div class="cs-grid">
+        <div class="stat"><div class="k">In-state tuition</div><div class="v green">~$4,800/yr</div><small>$0 for most with Pell + TAP</small></div>
+        <div class="stat"><div class="k">Out-of-state tuition</div><div class="v">~$9,200/yr</div><small>Open admission</small></div>
+        <div class="stat"><div class="k">Avg admit profile</div><div class="v">Open door</div><small>HS diploma/GED — all welcome</small></div>
+        <div class="stat"><div class="k">Known for</div><div class="v">Transfer → CUNY 4-yr</div><small>Business, nursing, liberal arts AA</small></div>
+      </div>
     </div>
   </section>
 
