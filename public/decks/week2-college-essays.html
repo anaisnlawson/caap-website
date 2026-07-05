@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 2 · College Essays Deep Dive — CAAP</title>
+<style>
+  :root {
+    --purple: #8b5cf6;
+    --purple-dark: #5b21b6;
+    --purple-mid: #7c3aed;
+    --slate-900: #1e293b;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-400: #94a3b8;
+    --bg: #f8fafc;
+    --why: #ef4444;
+    --community: #f59e0b;
+    --leadership: #10b981;
+    --diversity: #3b82f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #0b1220;
+    color: var(--slate-900);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .deck { position: fixed; inset: 0; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6vh 9vw 9vh;
+    background: linear-gradient(135deg, #f5f3ff, #faf5ff);
+    overflow: auto;
+  }
+  .slide.active { display: flex; animation: fade .4s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  .slide.title-slide {
+    background: linear-gradient(135deg, var(--purple-dark), var(--purple-mid));
+    color: white; align-items: flex-start;
+  }
+  .badge {
+    display: inline-block; background: rgba(255,255,255,.15);
+    padding: .5rem 1.1rem; border-radius: 999px; font-weight: 600;
+    font-size: 1rem; margin-bottom: 1.5rem; letter-spacing: .02em;
+  }
+  .title-slide h1 { font-size: clamp(2.2rem, 5.5vw, 4rem); line-height: 1.05; }
+  .title-slide .sub { font-size: clamp(1.1rem, 2.2vw, 1.6rem); margin-top: 1.2rem; opacity: .92; max-width: 32ch; }
+  .title-slide .meta { margin-top: 2.4rem; font-size: 1.05rem; opacity: .85; }
+
+  .eyebrow { color: var(--purple-mid); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; font-size: .95rem; margin-bottom: .6rem; }
+  h2 { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--purple-dark); line-height: 1.1; margin-bottom: 1.6rem; }
+  .lead { font-size: clamp(1.05rem, 2vw, 1.4rem); color: var(--slate-600); max-width: 62ch; margin-bottom: 1.4rem; }
+  ul { list-style: none; max-width: 66ch; }
+  li { font-size: clamp(1rem, 1.7vw, 1.35rem); color: var(--slate-900); padding: .55rem 0 .55rem 2rem;
+    position: relative; line-height: 1.35; }
+  li::before { content: '▸'; position: absolute; left: 0; color: var(--purple); font-weight: 700; }
+  .emoji { font-size: 1.4em; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; max-width: 980px; }
+  .card { background: white; border-radius: 16px; padding: 1.6rem; box-shadow: 0 6px 24px rgba(91,33,182,.08);
+    border-top: 5px solid var(--purple); }
+  .card h3 { font-size: 1.3rem; margin-bottom: .6rem; }
+  .card p { color: var(--slate-500); font-size: 1rem; line-height: 1.4; }
+  .card.why { border-color: var(--why); } .card.why h3 { color: var(--why); }
+  .card.community { border-color: var(--community); } .card.community h3 { color: #b45309; }
+  .card.leadership { border-color: var(--leadership); } .card.leadership h3 { color: #047857; }
+  .card.diversity { border-color: var(--diversity); } .card.diversity h3 { color: #1d4ed8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem; max-width: 980px; }
+  .two-col h3 { color: var(--purple-dark); font-size: 1.4rem; margin-bottom: .4rem; }
+  .two-col.bad h3 { color: #b91c1c; } .two-col.good h3 { color: #047857; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
+  .pill { background: rgba(139,92,246,.12); color: var(--purple-mid); font-weight: 600;
+    padding: .5rem 1rem; border-radius: 999px; font-size: 1rem; }
+
+  .quote { font-size: clamp(1.4rem, 3vw, 2.4rem); color: white; font-weight: 700;
+    line-height: 1.25; max-width: 24ch; }
+  .quote .by { display: block; font-size: 1rem; color: rgba(255,255,255,.8); font-weight: 500; margin-top: 1.2rem; }
+
+  .progress { position: fixed; bottom: 0; left: 0; height: 6px; background: var(--purple);
+    transition: width .3s ease; z-index: 30; }
+  .nav { position: fixed; bottom: 1.2rem; right: 1.6rem; display: flex; gap: .5rem; align-items: center; z-index: 30; }
+  .nav button { border: none; background: var(--purple-dark); color: white; width: 42px; height: 42px;
+    border-radius: 50%; font-size: 1.2rem; cursor: pointer; opacity: .9; }
+  .nav button:hover { opacity: 1; } .nav button:disabled { opacity: .3; cursor: default; }
+  .counter { position: fixed; bottom: 1.5rem; left: 1.6rem; color: var(--slate-500); font-weight: 600;
+    font-size: .95rem; z-index: 30; }
+  .hint { position: fixed; top: 1rem; right: 1.4rem; color: var(--slate-400); font-size: .8rem; z-index: 30; }
+
+  /* two-column compare board */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; max-width: 1000px; margin-top: .4rem; }
+  .compare .box { background: white; border-radius: 16px; padding: 1.5rem 1.7rem; box-shadow: 0 6px 24px rgba(91,33,182,.08); }
+  .compare .box.bad { border-top: 5px solid var(--why); }
+  .compare .box.good { border-top: 5px solid var(--leadership); }
+  .compare .box h3 { font-size: 1.25rem; margin-bottom: .7rem; }
+  .compare .box.bad h3 { color: #b91c1c; } .compare .box.good h3 { color: #047857; }
+  .compare .box ul { max-width: none; } .compare .box li { font-size: 1.02rem; padding: .35rem 0 .35rem 1.6rem; }
+  .compare .box.bad li::before { content: '✕'; color: var(--why); }
+  .compare .box.good li::before { content: '✓'; color: var(--leadership); }
+
+  /* numbered tip */
+  .tip-num { display:inline-flex; align-items:center; justify-content:center; width:2.6rem; height:2.6rem;
+    background: var(--purple); color:#fff; border-radius:50%; font-weight:800; font-size:1.3rem; margin-bottom:.9rem; }
+
+  /* step timeline */
+  .steps { display:grid; grid-template-columns: repeat(3,1fr); gap:1.1rem; max-width:1000px; margin-top:.4rem; }
+  .step { background:white; border-radius:14px; padding:1.3rem 1.4rem; box-shadow:0 6px 22px rgba(91,33,182,.08);
+    border-left:5px solid var(--purple); }
+  .step .k { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--purple-mid); font-weight:700; }
+  .step .v { font-size:1.15rem; font-weight:700; color:var(--purple-dark); line-height:1.2; margin:.3rem 0; }
+  .step small { color:var(--slate-500); line-height:1.35; display:block; }
+
+  /* template card */
+  .template { background:white; border-radius:16px; padding:1.6rem 1.9rem; max-width:900px;
+    box-shadow:0 8px 28px rgba(91,33,182,.1); border-left:6px solid var(--purple); }
+  .template p { color:var(--slate-600); font-size:1.05rem; line-height:1.55; margin-bottom:.7rem; }
+  .template .hl { background: rgba(139,92,246,.14); color:var(--purple-dark); font-weight:600;
+    padding:.05rem .3rem; border-radius:5px; }
+
+  .resource { display:inline-flex; align-items:center; gap:.5rem; background: rgba(139,92,246,.12);
+    color: var(--purple-dark); font-weight:600; padding:.5rem 1rem; border-radius:10px; font-size:.98rem;
+    margin-top:1rem; margin-right:.6rem; }
+
+  .accent-red .eyebrow{color:var(--why)} .accent-amber .eyebrow{color:#b45309}
+  .accent-green .eyebrow{color:#047857} .accent-blue .eyebrow{color:#1d4ed8}
+  .slide > * { position: relative; z-index: 1; }
+
+  @media print { .slide { display: flex !important; position: relative; min-height: 100vh; page-break-after: always; }
+    .nav, .progress, .counter, .hint { display: none; } }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1 -->
+  <section class="slide title-slide active">
+    <div class="badge">✍️ Week 2 · Essays Deep Dive</div>
+    <h1>College Essays<br>Deep Dive</h1>
+    <p class="sub">Draft it, revise it, and make it sound unmistakably like you.</p>
+    <p class="meta">College Application Assistance Program · Saturdays 10 AM–1 PM</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="eyebrow">Today's Goals</div>
+    <h2>By the end of today, you will…</h2>
+    <ul>
+      <li>Understand the <strong>Common App prompts</strong> and pick the one that fits your story.</li>
+      <li>Have a plan to <strong>draft, revise, and polish</strong> your personal statement.</li>
+      <li>Know how <strong>supplemental essays</strong> (Why Us, Community, Leadership, Diversity) work.</li>
+      <li>Send a strong, respectful <strong>recommendation-letter request</strong> to a teacher.</li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="eyebrow">Where we are</div>
+    <h2>From "a moment" to a finished draft</h2>
+    <p class="lead">Last week you built your college list and mined your life for essay ideas. This week is all about the writing — turning a real moment into an essay an admissions officer can't put down.</p>
+    <ul>
+      <li>You already have your Life Timeline and a rough first draft. ✅</li>
+      <li>Today: structure it, sharpen it, and get feedback.</li>
+      <li>Writing is a <strong>process</strong> — nobody nails it in one draft.</li>
+    </ul>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="eyebrow">The landscape</div>
+    <h2>Two kinds of essays you'll write</h2>
+    <div class="two-col">
+      <div>
+        <h3>📄 Personal Statement</h3>
+        <ul>
+          <li>One essay, ~650 words</li>
+          <li>Goes to every school on the Common App</li>
+          <li>Your big-picture story &amp; voice</li>
+        </ul>
+      </div>
+      <div>
+        <h3>🧩 Supplemental Essays</h3>
+        <ul>
+          <li>School-specific, often 100–400 words</li>
+          <li>"Why us?", community, leadership, diversity</li>
+          <li>Show fit + reasons for <em>this</em> school</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:1.4rem">We'll master the personal statement first, then tackle supplements.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="eyebrow">Part 1 · The Common App essay</div>
+    <h2>Breaking down the prompts</h2>
+    <div class="cards">
+      <div class="card"><h3>Background 🌱</h3><p>An identity, interest, or talent so meaningful your app would be incomplete without it.</p></div>
+      <div class="card"><h3>Challenge 💪</h3><p>A setback, failure, or obstacle — and what you learned from it.</p></div>
+      <div class="card"><h3>Belief 🤔</h3><p>A time you questioned or challenged an idea. What prompted it?</p></div>
+      <div class="card"><h3>Gratitude 🙏</h3><p>Something someone did that made you happy or grateful, and how it changed you.</p></div>
+      <div class="card"><h3>Growth 🚀</h3><p>An accomplishment or realization that sparked personal growth.</p></div>
+      <div class="card"><h3>Your choice ✨</h3><p>Any topic of your choice — or an essay you've already written.</p></div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Pick the prompt your <strong>story</strong> already fits — don't force a story to match a prompt.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="eyebrow">Mindset</div>
+    <h2>The essay is not a résumé</h2>
+    <p class="lead">Your grades and activities are already on the application. The essay's only job is to make an admissions officer <em>feel</em> who you are — and that comes from a story, told in your voice.</p>
+    <ul>
+      <li>650 words, one human, one voice.</li>
+      <li>They read thousands of essays — yours stands out by being <strong>specific</strong>.</li>
+      <li>Show growth, not perfection.</li>
+    </ul>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide title-slide" style="background:linear-gradient(135deg,#5b21b6,#8b5cf6)">
+    <div class="badge">📚 Guest wisdom · Harvard College</div>
+    <h1>7 (very unofficial)<br>tips for your essay</h1>
+    <p class="sub">Straight from a Harvard student's honest, funny advice — the same rules the pros use.</p>
+    <p class="meta">Source: "My Very Unofficial Tips for Writing Your College Essay" · college.harvard.edu</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <span class="tip-num">1</span>
+    <div class="eyebrow">Harvard tip</div>
+    <h2>Make it uniquely you</h2>
+    <p class="lead">The personal essay is the <strong>only</strong> place admissions officers hear your actual voice. If someone dropped 1,000 nameless essays on the floor, your friends and family should be able to pick out yours.</p>
+    <ul>
+      <li>Write in your regular, everyday voice — not "English-paper formal."</li>
+      <li>This isn't an essay on <em>Hamlet</em>. It's an essay on <strong>you</strong>.</li>
+      <li>The instinct to sound "proper and elevated" is baloney. Sound human.</li>
+    </ul>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <span class="tip-num">2</span>
+    <div class="eyebrow">Harvard tip</div>
+    <h2>Pick a topic that matters to you</h2>
+    <p class="lead">It doesn't have to be sad, dramatic, or impressive. You can write about your mom, a trip to McDonald's with friends, or anything — as long as it brings out your personality.</p>
+    <ul>
+      <li>Don't try to "impress" — they already see your resume.</li>
+      <li>Brainstorm a ton of ideas, then choose the one that's most <em>you</em>.</li>
+      <li>Pick something you won't get bored of — you'll live with it a while.</li>
+    </ul>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <span class="tip-num">3</span>
+    <div class="eyebrow">Harvard tips 3 & 4</div>
+    <h2>Just start writing — and write a lot</h2>
+    <p class="lead">Nothing is worse than a blank screen. Once words are down, more ideas come. Pour everything out about your topic — even the messy parts — then whittle the novel down to 650 words.</p>
+    <ul>
+      <li>A stinky first draft still gives your essay a shape.</li>
+      <li>For every sentence that makes the cut, ~4 won't. That's normal — trim the fat.</li>
+      <li>Overwrite first, edit second. You can't edit a blank page.</li>
+    </ul>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <span class="tip-num">5</span>
+    <div class="eyebrow">Harvard tip</div>
+    <h2>Rewrite, rewrite, rewrite</h2>
+    <p class="lead"><em>The Great Gatsby</em> wasn't written in one draft. Neither was the Declaration of Independence. Masterpieces get revised — a lot.</p>
+    <ul>
+      <li>Read it <strong>out loud</strong>. Sounds weird? Fix it. Boring? Jazz it up.</li>
+      <li>Unlike a class paper, strangers who don't know you will read this.</li>
+      <li>Keep rewriting until you're proud of it — or even before you are.</li>
+    </ul>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <span class="tip-num">6</span>
+    <div class="eyebrow">Harvard tip</div>
+    <h2>Show it to other people</h2>
+    <p class="lead">Let your mom read it. Show your teacher. Show the milkman if you have one. Fresh eyes make every essay stronger — you just have to get past the awkwardness.</p>
+    <ul>
+      <li>Advice that rings true? Great, use it.</li>
+      <li>Advice you disagree with? Great, you don't have to take it.</li>
+      <li>More perspectives = a stronger essay. Every time.</li>
+    </ul>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide">
+    <span class="tip-num">7</span>
+    <div class="eyebrow">Harvard tip · the finish line</div>
+    <h2>Are you proud of it?</h2>
+    <p class="lead">If <strong>no</strong> → keep rewriting, or start fresh with a new topic. Sometimes an essay is like overcooked cookies — frosting won't save it, and starting over is totally fine.</p>
+    <ul>
+      <li>Don't get stuck in negativity, and don't freak out.</li>
+      <li>If <strong>yes</strong> → well done. You've written your college essay. 🎉</li>
+    </ul>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide">
+    <div class="eyebrow">The big trap</div>
+    <h2>Authentic vs. what you <em>think</em> they want</h2>
+    <div class="compare">
+      <div class="box bad">
+        <h3>❌ Writing to impress</h3>
+        <ul>
+          <li>Big words you'd never say out loud</li>
+          <li>A "perfect," conflict-free hero</li>
+          <li>The topic you think sounds impressive</li>
+          <li>Generic lessons ("I learned teamwork")</li>
+        </ul>
+      </div>
+      <div class="box good">
+        <h3>✓ Writing authentically</h3>
+        <ul>
+          <li>Your real voice and vocabulary</li>
+          <li>Honest struggle + real growth</li>
+          <li>The topic that's genuinely <em>you</em></li>
+          <li>Specific, personal takeaways</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Admissions officers read thousands of "impressive" essays. Authenticity is what they remember.</p>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide title-slide" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">
+    <div class="badge">🎥 From the webinar</div>
+    <h1>How to write an essay<br>that stands out</h1>
+    <p class="sub">Key takeaways from the "How to Write a College Essay That Stands Out" webinar — how to hook a reader and keep them.</p>
+    <p class="meta">Watch: youtube.com/watch?v=2xmKJtGViGg</p>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide">
+    <div class="eyebrow">From the webinar</div>
+    <h2>What makes an essay stand out</h2>
+    <ul>
+      <li><strong>Start strong</strong> — open in the middle of a moment, not with a thesis statement.</li>
+      <li><strong>Show, don't tell</strong> — details, dialogue, and senses beat adjectives.</li>
+      <li><strong>Stay focused</strong> — one moment, one idea, done well.</li>
+      <li><strong>Sound authentic</strong> — your voice is your advantage.</li>
+      <li><strong>Reflect</strong> — the "so what?" matters as much as the story.</li>
+      <li><strong>Connect to the future</strong> — hint at who you'll be on campus.</li>
+    </ul>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide">
+    <div class="eyebrow">Editing strategies</div>
+    <h2>How to polish a draft</h2>
+    <div class="steps">
+      <div class="step"><div class="k">Pass 1 · Structure</div><div class="v">Does it flow?</div><small>Strong opening, clear middle, reflective ending. Cut anything that doesn't earn its place.</small></div>
+      <div class="step"><div class="k">Pass 2 · Voice</div><div class="v">Read it aloud</div><small>If you'd never say it out loud, rewrite it. Trim big words and clichés.</small></div>
+      <div class="step"><div class="k">Pass 3 · Details</div><div class="v">Show, don't tell</div><small>Swap "I was nervous" for the shaking hands. Add one vivid, specific image.</small></div>
+      <div class="step"><div class="k">Pass 4 · Length</div><div class="v">Hit 650</div><small>Cut ~4 sentences for every keeper. Every word should earn its spot.</small></div>
+      <div class="step"><div class="k">Pass 5 · Fresh eyes</div><div class="v">Get feedback</div><small>Give it to a teacher, peer, or family member. Sit with the notes.</small></div>
+      <div class="step"><div class="k">Pass 6 · Proofread</div><div class="v">Final polish</div><small>Spelling, grammar, the school's name. Read backward to catch typos.</small></div>
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide">
+    <div class="eyebrow">Part 2 · Supplemental essays</div>
+    <h2>The four you'll see most</h2>
+    <div class="cards">
+      <div class="card why"><h3>Why Us? 🎯</h3><p>Why <em>this</em> school? Name specific programs, professors, clubs — not the rankings.</p></div>
+      <div class="card community"><h3>Community 🏘️</h3><p>A community you belong to and the role you play in it.</p></div>
+      <div class="card leadership"><h3>Leadership 🌟</h3><p>A time you led or made an impact — titles optional, action required.</p></div>
+      <div class="card diversity"><h3>Diversity 🌍</h3><p>The perspective or background you'd add to their campus.</p></div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Tip: keep a <strong>bank</strong> of reusable paragraphs — many supplements repeat across schools.</p>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide accent-red">
+    <div class="eyebrow">Spotlight · the hardest one</div>
+    <h2>Nailing the "Why Us?" essay</h2>
+    <p class="lead">The #1 mistake: an essay that could be copy-pasted to any school. Specificity is everything — prove you did your homework.</p>
+    <div class="two-col">
+      <div><h3 style="color:#b91c1c">❌ Too generic</h3><ul><li>"Great academics and beautiful campus"</li><li>"Highly ranked and prestigious"</li><li>Facts from the homepage</li></ul></div>
+      <div><h3 style="color:#047857">✓ Specific &amp; personal</h3><ul><li>A named course, professor, or lab</li><li>A club or tradition you'd join</li><li>How it connects to <em>your</em> goals</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide">
+    <div class="eyebrow">Part 3 · Recommendation letters</div>
+    <h2>How to ask — the right way</h2>
+    <ul>
+      <li><strong>Ask early</strong> — at least 3–4 weeks before the deadline. Teachers write many.</li>
+      <li><strong>Ask in person first</strong>, then follow up in writing with the details.</li>
+      <li><strong>Pick teachers who know you</strong> — recent, and from a class where you showed growth.</li>
+      <li><strong>Make it easy</strong> — share your resume, deadlines, and a few reminders of your best moments.</li>
+      <li><strong>Say thank you</strong> — a note after, and let them know where you got in.</li>
+    </ul>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide">
+    <div class="eyebrow">Copy this</div>
+    <h2>Recommender outreach template</h2>
+    <div class="template">
+      <p>Hi <span class="hl">[Teacher's name]</span>,</p>
+      <p>I really enjoyed your <span class="hl">[class]</span> last year — especially <span class="hl">[a specific project or moment]</span>. I'm applying to college this fall and would be honored if you'd write me a letter of recommendation.</p>
+      <p>My earliest deadline is <span class="hl">[date]</span>. If you're able to, I'll send you my resume, a short "brag sheet," and the submission links so it's as easy as possible. Totally understand if your plate is full!</p>
+      <p>Thank you so much for considering it. — <span class="hl">[Your name]</span></p>
+    </div>
+    <div class="pill-row"><span class="pill">Personal</span><span class="pill">Specific</span><span class="pill">Gives an easy out</span><span class="pill">On time</span></div>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide title-slide" style="background:linear-gradient(135deg,#5b21b6,#7c3aed)">
+    <div class="badge">Remember</div>
+    <p class="quote">"None of the other applications have <em>you</em> in them — so make yourself shine through."
+      <span class="by">Your voice is the one thing no one else can copy.</span></p>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide">
+    <div class="eyebrow">Workshop · hands-on today</div>
+    <h2>🛠️ Peer review + 1:1 feedback</h2>
+    <div class="cards">
+      <div class="card"><h3>👥 Peer review</h3><p>Swap drafts in pairs. Mark one line you loved + one that confused you.</p></div>
+      <div class="card"><h3>🧑‍🏫 1:1 feedback</h3><p>Bring your draft + questions for a 10-min coaching slot.</p></div>
+      <div class="card"><h3>📋 Activity list</h3><p>Build your resume/activity list — impact over titles.</p></div>
+    </div>
+    <div class="pill-row"><span class="pill">Read a partner's aloud</span><span class="pill">Find the "so what?"</span><span class="pill">Send 1 recommender request</span></div>
+  </section>
+
+  <!-- 24 -->
+  <section class="slide">
+    <div class="eyebrow">Homework</div>
+    <h2>Before next Saturday</h2>
+    <ul>
+      <li>Revise your personal statement to a polished draft — under 650 words.</li>
+      <li>Send at least one recommendation-letter request using the template.</li>
+      <li>Draft one "Why Us?" supplement for a top-choice school.</li>
+      <li>Finish your activity list — bring it for the scholarships workshop.</li>
+    </ul>
+    <div>
+      <span class="resource">📚 Harvard: My Very Unofficial Tips</span>
+      <span class="resource">🎥 Webinar: Essays That Stand Out</span>
+    </div>
+  </section>
+
+  <!-- 25 -->
+  <section class="slide title-slide">
+    <div class="badge">Up next</div>
+    <h1>Week 3: Fly-Ins + Scholarships 💰</h1>
+    <p class="sub">Free campus visits and finding money to pay for it all.</p>
+    <p class="meta">Bring your polished essay + activity list. See you Saturday. 🌟</p>
+  </section>
+
+</div>
+
+<div class="hint">← → to navigate · F fullscreen</div>
+<div class="counter"><span id="cur">1</span> / <span id="total">25</span></div>
+<div class="nav"><button id="prev">‹</button><button id="next">›</button></div>
+<div class="progress" id="bar"></div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  let i = 0;
+  const total = slides.length;
+  document.getElementById('total').textContent = total;
+  function show(n){
+    i = Math.max(0, Math.min(total-1, n));
+    slides.forEach((s,x)=>s.classList.toggle('active', x===i));
+    document.getElementById('cur').textContent = i+1;
+    document.getElementById('bar').style.width = ((i+1)/total*100)+'%';
+    document.getElementById('prev').disabled = i===0;
+    document.getElementById('next').disabled = i===total-1;
+  }
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')show(i+1);
+    if(e.key==='ArrowLeft')show(i-1);
+    if(e.key==='Home')show(0); if(e.key==='End')show(total-1);
+    if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+  });
+  show(0);
+</script>
+</body>
+</html>

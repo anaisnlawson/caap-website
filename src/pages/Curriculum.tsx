@@ -65,6 +65,7 @@ export default function Curriculum() {
       title: 'College Essays Deep Dive',
       emoji: '✍️',
       color: '#8b5cf6',
+      deck: '/decks/week2-college-essays.html',
       goals: [
         'Draft, revise, and polish personal statement',
         'Prepare for supplemental essays',
