@@ -3,15 +3,6 @@ import './Timeline.css';
 export default function Timeline() {
   const phases = [
     {
-      month: 'June',
-      emoji: '📋',
-      title: 'Sign Up!',
-      description:
-        'Register for the program. Once you join, the full program outline will be shared with you!',
-      color: '#10b981',
-      status: 'Right Now',
-    },
-    {
       month: 'July',
       emoji: '📚',
       title: '4 Weekends of In-Person Learning',
@@ -36,7 +27,7 @@ export default function Timeline() {
       <section className="timeline-hero">
         <h1>Here's Where You Come In! 🗓️</h1>
         <p className="timeline-subtitle">
-          Three phases to get you college-ready
+          Two phases to get you college-ready
         </p>
       </section>
 

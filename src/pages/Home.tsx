@@ -19,8 +19,8 @@ export default function Home() {
             covered! ✨
           </p>
           <div className="hero-actions">
-            <Link to="/signup" className="btn-primary">
-              Sign Up Now →
+            <Link to="/curriculum" className="btn-primary">
+              Explore the Program →
             </Link>
             <Link to="/about" className="btn-secondary">
               Learn More

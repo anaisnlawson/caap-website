@@ -18,7 +18,6 @@ export default function Navbar() {
           <li><NavLink to="/curriculum">Curriculum</NavLink></li>
           <li><NavLink to="/mentorship">Mentorship</NavLink></li>
           <li><NavLink to="/faq">FAQ</NavLink></li>
-          <li><NavLink to="/signup" className="nav-signup">Sign Up</NavLink></li>
         </ul>
       </div>
     </nav>
