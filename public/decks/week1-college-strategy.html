@@ -123,6 +123,29 @@
   .accent-green .eyebrow{color:#047857} .accent-purple .eyebrow{color:#7c3aed}
   .slide > * { position: relative; z-index: 1; }
 
+  /* mobile / small screens */
+  @media (max-width: 820px) {
+    .slide { padding: 5vh 7vw 9vh; }
+    h2 { margin-bottom: 1.1rem; }
+    .cards { grid-template-columns: 1fr 1fr; gap: .9rem; }
+    .two-col { grid-template-columns: 1fr; gap: 1.4rem; }
+    .photo-row { grid-template-columns: 1fr; gap: 1rem; max-width: 520px; }
+    .photo, .photo:nth-child(2), .photo:nth-child(3) { transform: none; }
+    .photo:hover { transform: none; }
+    .photo img { height: auto; aspect-ratio: 16 / 10; }
+    .cs-body { grid-template-columns: 1fr; gap: 1.1rem; }
+    .cs-grid { grid-template-columns: 1fr 1fr; }
+    .cs-photo img { height: auto; aspect-ratio: 16 / 10; }
+    .hint { display: none; }
+    .nav { bottom: .8rem; right: 1rem; }
+    .counter { bottom: 1.1rem; left: 1rem; }
+  }
+  @media (max-width: 520px) {
+    .slide { padding: 4.5vh 6vw 9vh; }
+    .cards, .cs-grid { grid-template-columns: 1fr; }
+    .nav button { width: 38px; height: 38px; }
+  }
+
   @media print { .slide { display: flex !important; position: relative; min-height: 100vh; page-break-after: always; }
     .nav, .progress, .counter, .hint { display: none; } }
 </style>
@@ -345,6 +368,21 @@
     <p class="lead" style="margin-top:1rem">Lesson: apply to a mix — the cheapest path is often a name you didn't expect.</p>
   </section>
 
+  <!-- What to think about · College Essay Guy "Six F's" -->
+  <section class="slide">
+    <div class="eyebrow">Choosing where to go 🧭</div>
+    <h2>What to think about before you commit</h2>
+    <p class="lead">Once the acceptances are in, don't just chase the ranking. Weigh <strong>best fit</strong> over prestige, have honest money conversations, and don't rush the decision. A helpful frame: the <strong>"Six F's"</strong> of college fit.</p>
+    <div class="cards">
+      <div class="card"><h3>Focus 🎯</h3><p>Academics &amp; priorities — your major, class sizes, graduation rates, plus food, dorms, location.</p></div>
+      <div class="card"><h3>Fellowship 🤝</h3><p>Your people — community, diversity, affinity. Will you feel affirmed <em>and</em> challenged?</p></div>
+      <div class="card"><h3>Financial 💰</h3><p>Compare real net cost across 4 years. Prestige is relative; <strong>debt is not</strong>.</p></div>
+      <div class="card"><h3>Future 🚀</h3><p>Advising, alumni network, career outcomes, accreditation.</p></div>
+      <div class="card"><h3>Family 🏠</h3><p>Distance from home, family needs, travel logistics, traditions.</p></div>
+      <div class="card"><h3>Feeling 💫</h3><p>The gut check — do you feel excited, safe, and pulled toward this place?</p></div>
+    </div>
+  </section>
+
   <!-- 5 -->
   <section class="slide">
     <div class="eyebrow">College Strategy</div>
@@ -490,7 +528,7 @@
 </div>
 
 <div class="hint">← → to navigate · F fullscreen</div>
-<div class="counter"><span id="cur">1</span> / <span id="total">14</span></div>
+<div class="counter"><span id="cur">1</span> / <span id="total">28</span></div>
 <div class="nav"><button id="prev">‹</button><button id="next">›</button></div>
 <div class="progress" id="bar"></div>
 
