@@ -123,12 +123,23 @@
   .accent-green .eyebrow{color:#047857} .accent-purple .eyebrow{color:#7c3aed}
   .slide > * { position: relative; z-index: 1; }
 
+  /* Common App prompt list */
+  .prompt-list { list-style: none; counter-reset: prompt; max-width: 1040px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: .5rem 2.4rem; }
+  .prompt-list li { counter-increment: prompt; padding: .5rem 0 .5rem 2.4rem; position: relative;
+    font-size: clamp(.95rem, 1.4vw, 1.12rem); line-height: 1.35; }
+  .prompt-list li::before { content: counter(prompt); position: absolute; left: 0; top: .5rem;
+    width: 1.7rem; height: 1.7rem; background: var(--blue); color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: .9rem; font-weight: 800; }
+  .prompt-list li strong { color: var(--blue-dark); }
+
   /* mobile / small screens */
   @media (max-width: 820px) {
     .slide { padding: 5vh 7vw 9vh; }
     h2 { margin-bottom: 1.1rem; }
     .cards { grid-template-columns: 1fr 1fr; gap: .9rem; }
     .two-col { grid-template-columns: 1fr; gap: 1.4rem; }
+    .prompt-list { grid-template-columns: 1fr; gap: 0; max-width: 640px; }
     .photo-row { grid-template-columns: 1fr; gap: 1rem; max-width: 520px; }
     .photo, .photo:nth-child(2), .photo:nth-child(3) { transform: none; }
     .photo:hover { transform: none; }
@@ -431,6 +442,33 @@
     </ul>
   </section>
 
+  <!-- 8a1 · Prompt framing + word rules -->
+  <section class="slide">
+    <div class="eyebrow">The assignment · Common App essay</div>
+    <h2>Pick a prompt, tell your story</h2>
+    <p class="lead">The essay shows you can write clearly in your own voice. Ask yourself: <em>what do I want readers to know about me apart from courses, grades, and test scores?</em> Choose the prompt that best helps you answer that — and let it inspire and structure your response.</p>
+    <ul>
+      <li><strong>650 words is your limit, not your goal.</strong> Use the full range if you need it — but don't feel obligated to.</li>
+      <li>The application won't accept anything shorter than <strong>250 words</strong>.</li>
+      <li>The prompt is a starting point — the story is yours.</li>
+    </ul>
+  </section>
+
+  <!-- 8a2 · The 7 prompts -->
+  <section class="slide">
+    <div class="eyebrow">Choose one · 2025–26 Common App prompts</div>
+    <h2>The 7 essay questions</h2>
+    <ol class="prompt-list">
+      <li><strong>Background / identity / interest / talent.</strong> Something so meaningful your application would be incomplete without it. Share your story.</li>
+      <li><strong>Challenge, setback, or failure.</strong> Recount a time you faced one. How did it affect you, and what did you learn?</li>
+      <li><strong>Questioning a belief or idea.</strong> Reflect on a time you challenged one. What prompted your thinking? What was the outcome?</li>
+      <li><strong>Gratitude.</strong> Something someone did that made you happy or thankful in a surprising way. How did it affect or motivate you?</li>
+      <li><strong>Personal growth.</strong> An accomplishment, event, or realization that sparked growth and a new understanding of yourself or others.</li>
+      <li><strong>What captivates you.</strong> A topic or idea so engaging you lose all track of time. Why? Who or what do you turn to to learn more?</li>
+      <li><strong>Topic of your choice.</strong> Anything — one you've written, a response to another prompt, or your own design.</li>
+    </ol>
+  </section>
+
   <!-- 8b -->
   <section class="slide">
     <div class="eyebrow">Getting started · Harvard student tips</div>
@@ -528,7 +566,7 @@
 </div>
 
 <div class="hint">← → to navigate · F fullscreen</div>
-<div class="counter"><span id="cur">1</span> / <span id="total">28</span></div>
+<div class="counter"><span id="cur">1</span> / <span id="total">30</span></div>
 <div class="nav"><button id="prev">‹</button><button id="next">›</button></div>
 <div class="progress" id="bar"></div>
 
