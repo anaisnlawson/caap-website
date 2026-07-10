@@ -60,22 +60,6 @@
   background: #dbeafe;
 }
 
-.nav-signup {
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6) !important;
-  color: white !important;
-  padding: 0.5rem 1.25rem !important;
-  border-radius: 25px !important;
-  font-weight: 600 !important;
-  white-space: nowrap;
-}
-
-.nav-signup:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-  background: linear-gradient(135deg, #1e40af, #60a5fa) !important;
-  color: white !important;
-}
-
 @media (max-width: 1024px) {
   .nav-links {
     gap: 0.25rem;

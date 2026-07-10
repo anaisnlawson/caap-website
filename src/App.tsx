@@ -7,7 +7,6 @@ import Timeline from './pages/Timeline';
 import Curriculum from './pages/Curriculum';
 import Mentorship from './pages/Mentorship';
 import FAQ from './pages/FAQ';
-import Signup from './pages/Signup';
 import './App.css';
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
           <Route path="/curriculum" element={<Curriculum />} />
           <Route path="/mentorship" element={<Mentorship />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/signup" element={<Signup />} />
         </Routes>
       </main>
       <Footer />
