@@ -7,7 +7,7 @@ export default function Timeline() {
       emoji: '📚',
       title: '4 Weekends of In-Person Learning',
       description:
-        'Saturday sessions from 10 AM – 1 PM covering everything from essay writing to financial aid. Location: TBA. Attendance is mandatory.',
+        'Saturday sessions from 10 AM – 1 PM covering everything from essay writing to financial aid. Attendance is mandatory.',
       color: '#3b82f6',
       status: 'In Person',
     },
