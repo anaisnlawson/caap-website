@@ -60,6 +60,22 @@
   background: #dbeafe;
 }
 
+.nav-links a.nav-cta {
+  background: #1e3a8a;
+  color: #fff;
+  font-weight: 600;
+}
+
+.nav-links a.nav-cta:hover {
+  background: #1e40af;
+  color: #fff;
+}
+
+.nav-links a.nav-cta.active {
+  background: #1e40af;
+  color: #fff;
+}
+
 @media (max-width: 1024px) {
   .nav-links {
     gap: 0.25rem;
