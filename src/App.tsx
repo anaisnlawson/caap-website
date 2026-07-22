@@ -6,6 +6,7 @@ import About from './pages/About';
 import Timeline from './pages/Timeline';
 import Curriculum from './pages/Curriculum';
 import Mentorship from './pages/Mentorship';
+import Scholarships from './pages/Scholarships';
 import FAQ from './pages/FAQ';
 import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/curriculum" element={<Curriculum />} />
           <Route path="/mentorship" element={<Mentorship />} />
+          <Route path="/scholarships" element={<Scholarships />} />
           <Route path="/faq" element={<FAQ />} />
         </Routes>
       </main>
