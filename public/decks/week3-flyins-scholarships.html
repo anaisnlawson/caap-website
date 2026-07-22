@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 3 · Fly-In Programs + Scholarships — CAAP</title>
+<style>
+  :root {
+    --amber: #f59e0b;
+    --amber-dark: #b45309;
+    --amber-mid: #d97706;
+    --slate-900: #1e293b;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-400: #94a3b8;
+    --bg: #f8fafc;
+    --plane: #3b82f6;
+    --money: #10b981;
+    --warn: #ef4444;
+    --gold: #eab308;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #0b1220;
+    color: var(--slate-900);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .deck { position: fixed; inset: 0; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6vh 9vw 9vh;
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    overflow: auto;
+  }
+  .slide.active { display: flex; animation: fade .4s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  .slide.title-slide {
+    background: linear-gradient(135deg, var(--amber-dark), var(--amber-mid));
+    color: white; align-items: flex-start;
+  }
+  .badge {
+    display: inline-block; background: rgba(255,255,255,.15);
+    padding: .5rem 1.1rem; border-radius: 999px; font-weight: 600;
+    font-size: 1rem; margin-bottom: 1.5rem; letter-spacing: .02em;
+  }
+  .title-slide h1 { font-size: clamp(2.2rem, 5.5vw, 4rem); line-height: 1.05; }
+  .title-slide .sub { font-size: clamp(1.1rem, 2.2vw, 1.6rem); margin-top: 1.2rem; opacity: .92; max-width: 34ch; }
+  .title-slide .meta { margin-top: 2.4rem; font-size: 1.05rem; opacity: .85; }
+
+  .eyebrow { color: var(--amber-mid); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; font-size: .95rem; margin-bottom: .6rem; }
+  h2 { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--amber-dark); line-height: 1.1; margin-bottom: 1.6rem; }
+  .lead { font-size: clamp(1.05rem, 2vw, 1.4rem); color: var(--slate-600); max-width: 62ch; margin-bottom: 1.4rem; }
+  ul { list-style: none; max-width: 66ch; }
+  li { font-size: clamp(1rem, 1.7vw, 1.35rem); color: var(--slate-900); padding: .55rem 0 .55rem 2rem;
+    position: relative; line-height: 1.35; }
+  li::before { content: '▸'; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+  .emoji { font-size: 1.4em; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; max-width: 980px; }
+  .card { background: white; border-radius: 16px; padding: 1.6rem; box-shadow: 0 6px 24px rgba(180,83,9,.08);
+    border-top: 5px solid var(--amber); }
+  .card h3 { font-size: 1.3rem; margin-bottom: .6rem; color: var(--amber-dark); }
+  .card p { color: var(--slate-500); font-size: 1rem; line-height: 1.4; }
+  .card.plane { border-color: var(--plane); } .card.plane h3 { color: #1d4ed8; }
+  .card.money { border-color: var(--money); } .card.money h3 { color: #047857; }
+  .card.warn { border-color: var(--warn); } .card.warn h3 { color: #b91c1c; }
+  .card.gold { border-color: var(--gold); } .card.gold h3 { color: #a16207; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem; max-width: 980px; }
+  .two-col h3 { color: var(--amber-dark); font-size: 1.4rem; margin-bottom: .4rem; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
+  .pill { background: rgba(245,158,11,.14); color: var(--amber-dark); font-weight: 600;
+    padding: .5rem 1rem; border-radius: 999px; font-size: 1rem; }
+
+  .quote { font-size: clamp(1.4rem, 3vw, 2.4rem); color: white; font-weight: 700;
+    line-height: 1.25; max-width: 26ch; }
+  .quote .by { display: block; font-size: 1rem; color: rgba(255,255,255,.8); font-weight: 500; margin-top: 1.2rem; }
+
+  .progress { position: fixed; bottom: 0; left: 0; height: 6px; background: var(--amber);
+    transition: width .3s ease; z-index: 30; }
+  .nav { position: fixed; bottom: 1.2rem; right: 1.6rem; display: flex; gap: .5rem; align-items: center; z-index: 30; }
+  .nav button { border: none; background: var(--amber-dark); color: white; width: 42px; height: 42px;
+    border-radius: 50%; font-size: 1.2rem; cursor: pointer; opacity: .9; }
+  .nav button:hover { opacity: 1; } .nav button:disabled { opacity: .3; cursor: default; }
+  .counter { position: fixed; bottom: 1.5rem; left: 1.6rem; color: var(--slate-500); font-weight: 600;
+    font-size: .95rem; z-index: 30; }
+  .hint { position: fixed; top: 1rem; right: 1.4rem; color: var(--slate-400); font-size: .8rem; z-index: 30; }
+
+  /* two-column compare board */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; max-width: 1000px; margin-top: .4rem; }
+  .compare .box { background: white; border-radius: 16px; padding: 1.5rem 1.7rem; box-shadow: 0 6px 24px rgba(180,83,9,.08); }
+  .compare .box.bad { border-top: 5px solid var(--warn); }
+  .compare .box.good { border-top: 5px solid var(--money); }
+  .compare .box h3 { font-size: 1.25rem; margin-bottom: .7rem; }
+  .compare .box.bad h3 { color: #b91c1c; } .compare .box.good h3 { color: #047857; }
+  .compare .box ul { max-width: none; } .compare .box li { font-size: 1.02rem; padding: .35rem 0 .35rem 1.6rem; }
+  .compare .box.bad li::before { content: '✕'; color: var(--warn); }
+  .compare .box.good li::before { content: '✓'; color: var(--money); }
+
+  /* step timeline */
+  .steps { display:grid; grid-template-columns: repeat(3,1fr); gap:1.1rem; max-width:1000px; margin-top:.4rem; }
+  .step { background:white; border-radius:14px; padding:1.3rem 1.4rem; box-shadow:0 6px 22px rgba(180,83,9,.08);
+    border-left:5px solid var(--amber); }
+  .step .k { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-mid); font-weight:700; }
+  .step .v { font-size:1.15rem; font-weight:700; color:var(--amber-dark); line-height:1.2; margin:.3rem 0; }
+  .step small { color:var(--slate-500); line-height:1.35; display:block; }
+
+  /* template card */
+  .template { background:white; border-radius:16px; padding:1.6rem 1.9rem; max-width:900px;
+    box-shadow:0 8px 28px rgba(180,83,9,.1); border-left:6px solid var(--amber); }
+  .template p { color:var(--slate-600); font-size:1.05rem; line-height:1.55; margin-bottom:.7rem; }
+  .template .hl { background: rgba(245,158,11,.18); color:var(--amber-dark); font-weight:600;
+    padding:.05rem .3rem; border-radius:5px; }
+
+  .resource { display:inline-flex; align-items:center; gap:.5rem; background: rgba(245,158,11,.14);
+    color: var(--amber-dark); font-weight:600; padding:.5rem 1rem; border-radius:10px; font-size:.98rem;
+    margin-top:1rem; margin-right:.6rem; }
+
+  /* mini stat row */
+  .stats { display:grid; grid-template-columns: repeat(3,1fr); gap:1.1rem; max-width:1000px; margin-top:.4rem; }
+  .stat { background:white; border-radius:14px; padding:1.4rem 1.5rem; box-shadow:0 6px 22px rgba(180,83,9,.08);
+    text-align:center; border-bottom:5px solid var(--amber); }
+  .stat .big { font-size: clamp(1.8rem,4vw,2.8rem); font-weight:800; color:var(--amber-dark); line-height:1; }
+  .stat .lbl { color:var(--slate-500); font-size:1rem; margin-top:.5rem; line-height:1.3; }
+
+  .accent-blue .eyebrow{color:#1d4ed8} .accent-green .eyebrow{color:#047857}
+  .accent-red .eyebrow{color:var(--warn)}
+  .slide > * { position: relative; z-index: 1; }
+
+  /* mobile / small screens */
+  @media (max-width: 820px) {
+    .slide { padding: 5vh 7vw 9vh; }
+    h2 { margin-bottom: 1.1rem; }
+    .cards, .stats { grid-template-columns: 1fr 1fr; gap: .9rem; }
+    .two-col, .compare { grid-template-columns: 1fr; gap: 1.2rem; }
+    .steps { grid-template-columns: 1fr; gap: .9rem; }
+    .hint { display: none; }
+    .nav { bottom: .8rem; right: 1rem; }
+    .counter { bottom: 1.1rem; left: 1rem; }
+  }
+  @media (max-width: 520px) {
+    .slide { padding: 4.5vh 6vw 9vh; }
+    .cards, .stats { grid-template-columns: 1fr; }
+    .nav button { width: 38px; height: 38px; }
+  }
+
+  @media print { .slide { display: flex !important; position: relative; min-height: 100vh; page-break-after: always; }
+    .nav, .progress, .counter, .hint { display: none; } }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1 · Title -->
+  <section class="slide title-slide active">
+    <div class="badge">💰 Week 3 · Fly-Ins + Scholarships</div>
+    <h1>Expanding Access:<br>Fly-Ins + Scholarships</h1>
+    <p class="sub">Free trips to campus, and finding the money to actually pay for college.</p>
+    <p class="meta">College Application Assistance Program · Saturdays 10 AM–1 PM</p>
+  </section>
+
+  <!-- 2 · Goals -->
+  <section class="slide">
+    <div class="eyebrow">Today's Goals</div>
+    <h2>By the end of today, you will…</h2>
+    <ul>
+      <li>Know what <strong>fly-in programs</strong> are and how they cover travel, meals, and lodging.</li>
+      <li>Know <strong>who qualifies</strong> and how to write a strong fly-in application.</li>
+      <li>Understand the different <strong>types of scholarships</strong> and financial aid.</li>
+      <li>Have a <strong>system</strong> to find, track, and win scholarships — starting today.</li>
+    </ul>
+  </section>
+
+  <!-- 3 · Where we are -->
+  <section class="slide">
+    <div class="eyebrow">Where we are</div>
+    <h2>Week 2 → Week 3</h2>
+    <p class="lead">You've <strong>started your essay</strong> and your activity list — keep that momentum going. This week is about <strong>access</strong> — getting onto campuses for free, and finding money so cost never decides where you go.</p>
+    <ul>
+      <li>Part 1: <strong>Fly-in programs</strong> — visit your dream schools on their dime. ✈️</li>
+      <li>Part 2: <strong>Scholarships</strong> — free money that never has to be repaid. 💰</li>
+      <li>You'll leave with a <strong>tracker</strong> and a plan for deadlines.</li>
+    </ul>
+  </section>
+
+  <!-- 4 · Part 1 divider -->
+  <section class="slide title-slide accent-blue" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">
+    <div class="badge">✈️ Part 1</div>
+    <h1>Fly-In Programs</h1>
+    <p class="sub">Some colleges will pay to bring you to campus — because they want students like you there.</p>
+  </section>
+
+  <!-- 5 · What is a fly-in -->
+  <section class="slide">
+    <div class="eyebrow">The basics</div>
+    <h2>What is a fly-in program?</h2>
+    <p class="lead">A college <strong>covers the cost</strong> for prospective students to visit campus in person — so you can experience college life <em>before</em> deciding where to attend.</p>
+    <div class="cards">
+      <div class="card plane"><h3>🚌 Travel</h3><p>Flights, trains, or buses to get you there — that's where "fly-in" comes from.</p></div>
+      <div class="card plane"><h3>🍽️ Meals</h3><p>Food is covered while you're on campus for the visit.</p></div>
+      <div class="card plane"><h3>🛏️ Lodging</h3><p>A place to stay, usually in the dorms with current students.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 · What happens -->
+  <section class="slide">
+    <div class="eyebrow">On the visit</div>
+    <h2>What actually happens there</h2>
+    <p class="lead">These are usually 1–2 day (and night) visits, packed with a real taste of campus life.</p>
+    <ul>
+      <li>Sit in on <strong>real classes</strong> and see how professors teach.</li>
+      <li>Get a <strong>campus tour</strong> and stay overnight in the dorms.</li>
+      <li>Meet <strong>current students</strong> — sometimes your future best friend. 👋</li>
+      <li>Attend <strong>financial aid + application</strong> info sessions.</li>
+      <li>Go to <strong>social events</strong> and feel the campus culture firsthand.</li>
+    </ul>
+  </section>
+
+  <!-- 7 · Why it matters -->
+  <section class="slide">
+    <div class="eyebrow">Why it's worth the effort</div>
+    <h2>It's a win-win</h2>
+    <div class="two-col">
+      <div>
+        <h3>🎓 What the school gets</h3>
+        <ul>
+          <li>A shot at the right-fit applicants</li>
+          <li>A more diverse, engaged community</li>
+          <li>Students who've seen it and love it</li>
+        </ul>
+      </div>
+      <div>
+        <h3>🙋 What you get</h3>
+        <ul>
+          <li>A free look before a huge decision</li>
+          <li>Proof it's the right place — or not</li>
+          <li>Demonstrated interest on your app</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Finding out a school <em>isn't</em> right up close is just as valuable as confirming that it is.</p>
+  </section>
+
+  <!-- 8 · Who should apply -->
+  <section class="slide">
+    <div class="eyebrow">Who these are for</div>
+    <h2>Should you apply? Probably yes.</h2>
+    <p class="lead">Fly-ins exist to give campus access to students who otherwise might not get it. You're a strong fit if you're…</p>
+    <div class="cards">
+      <div class="card plane"><h3>🌱 First-gen</h3><p>No family members who've done the college process before you.</p></div>
+      <div class="card plane"><h3>🏫 Under-resourced</h3><p>Your high school can't offer a lot of college-app support.</p></div>
+      <div class="card plane"><h3>💵 Limited funds</h3><p>A trip to visit campus isn't realistic for your family right now.</p></div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Each school sets its own eligibility — read the criteria carefully before you apply.</p>
+  </section>
+
+  <!-- 9 · How to apply -->
+  <section class="slide">
+    <div class="eyebrow">How to apply</div>
+    <h2>What most fly-in applications ask for</h2>
+    <ul>
+      <li>A completed <strong>fly-in application</strong> (separate from your college app).</li>
+      <li><strong>Financial information</strong> for you and your family.</li>
+      <li>An <strong>essay</strong> on why you're interested + how you'd benefit — basically a "Why Us."</li>
+      <li><strong>Letters of recommendation</strong> from a teacher or counselor.</li>
+      <li>Your <strong>high school transcript</strong>.</li>
+    </ul>
+    <p class="lead" style="margin-top:1rem">These are <strong>competitive</strong> — getting one is a big deal. Don't let the work scare you off. 💪</p>
+  </section>
+
+  <!-- 10 · Fly-in essay -->
+  <section class="slide accent-blue">
+    <div class="eyebrow">The fly-in essay</div>
+    <h2>Write it like a "Why Us"</h2>
+    <p class="lead">The #1 mistake is an essay you could paste to any school. Be specific — prove you did your homework.</p>
+    <div class="compare">
+      <div class="box bad">
+        <h3>❌ Too generic</h3>
+        <ul>
+          <li>"I want to experience campus life"</li>
+          <li>"It's a great, highly-ranked school"</li>
+          <li>Facts copied off the homepage</li>
+        </ul>
+      </div>
+      <div class="box good">
+        <h3>✓ Specific &amp; personal</h3>
+        <ul>
+          <li>A named program, class, or professor</li>
+          <li>A club or tradition you'd join</li>
+          <li>Why the visit matters for <em>your</em> decision</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · Case study intro -->
+  <section class="slide accent-blue">
+    <div class="eyebrow">Let's walk through a real one</div>
+    <h2>Case study: Colgate in Focus 🍁</h2>
+    <p class="lead">Colgate University in <strong>Hamilton, New York</strong> runs a fall fly-in called <strong>Colgate in Focus</strong>. Here's how a real program near us breaks down — so you know what to expect.</p>
+    <div class="stats">
+      <div class="stat"><div class="big">$0</div><div class="lbl">Free to apply <em>and</em> free to attend</div></div>
+      <div class="stat"><div class="big">2–3</div><div class="lbl">days on campus, staying overnight with a host</div></div>
+      <div class="stat"><div class="big">Test-<br>optional</div><div class="lbl">Scores accepted but not required</div></div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Priority goes to <strong>first-gen, low-income, and underrepresented</strong> students — but all are welcome to apply. You just get to your local airport, train, or bus station; Colgate covers the rest.</p>
+  </section>
+
+  <!-- 12 · Case study breakdown -->
+  <section class="slide">
+    <div class="eyebrow">Colgate in Focus · the full breakdown</div>
+    <h2>What's covered, what you do, what to submit</h2>
+    <div class="steps">
+      <div class="step"><div class="k">They cover</div><div class="v">🚌 Getting there</div><small>Transportation to and from campus in central New York — flights, train, or bus, plus ground transport.</small></div>
+      <div class="step"><div class="k">They cover</div><div class="v">🛏️ Stay + 🍽️ meals</div><small>Stay overnight with a current student host in a residence hall. Meals on campus are provided.</small></div>
+      <div class="step"><div class="k">You'll do</div><div class="v">📚 Real classes</div><small>Sit in on actual Colgate classes and meet current students, faculty, and staff.</small></div>
+      <div class="step"><div class="k">You'll do</div><div class="v">💬 Info + tours</div><small>Admissions and financial-aid info sessions, plus campus tours to see it all firsthand.</small></div>
+      <div class="step"><div class="k">You submit</div><div class="v">📄 The basics</div><small>Short online application, basic info, and your high-school transcript. Test scores optional.</small></div>
+      <div class="step"><div class="k">You submit</div><div class="v">✍️ 2 short essays</div><small>Two short-answer essays plus a set of quick "fun fact" one-liners (see next slide).</small></div>
+    </div>
+  </section>
+
+  <!-- 13 · Case study essay prompts -->
+  <section class="slide accent-blue">
+    <div class="eyebrow">Colgate in Focus · the writing</div>
+    <h2>The actual essay prompts ✍️</h2>
+    <div class="cards">
+      <div class="card plane"><h3>Diversity · ≤250 words</h3><p>Colgate students engage with people from many backgrounds, races, religions, and perspectives. Share the benefits you see in engaging with a diverse community of students, faculty, and staff at Colgate.</p></div>
+      <div class="card plane"><h3>What inspires you · ≤250 words</h3><p>Colgate students immerse themselves in pursuits that inspire them. Tell us what inspires you and why you want to pursue that at Colgate.</p></div>
+      <div class="card gold"><h3>Fun facts · ≤13 words each</h3><p>Quick finish-the-sentence lines, like: "I am fascinated by…", "In the future, I hope to…", and "I am drawn to Colgate because…"</p></div>
+    </div>
+    <p class="lead" style="margin-top:1.1rem"><strong>Notice:</strong> the two long prompts are basically a "Why Us" + a "you" essay — exactly the writing we've practiced. Prompts change year to year, so always confirm the current ones on Colgate's site.</p>
+  </section>
+
+  <!-- 13 · Make the most -->
+  <section class="slide">
+    <div class="eyebrow">You got in — now what?</div>
+    <h2>Make the most of the visit</h2>
+    <div class="steps">
+      <div class="step"><div class="k">Before</div><div class="v">Do your homework</div><small>Pick classes to sit in on and spots to see. Book a financial-aid or professor meeting.</small></div>
+      <div class="step"><div class="k">During</div><div class="v">Explore freely</div><small>Walk around. Find the dining hall, gym, library, bookstore — feel the real culture.</small></div>
+      <div class="step"><div class="k">During</div><div class="v">Talk to students</div><small>Ask current students what daily life is actually like. Ask your host to connect you.</small></div>
+      <div class="step"><div class="k">During</div><div class="v">Take notes</div><small>You'll get a firehose of info. Notebook or phone — capture it so schools don't blur together.</small></div>
+      <div class="step"><div class="k">After</div><div class="v">Reflect</div><small>Could you see yourself here? Write down your gut reaction while it's fresh.</small></div>
+      <div class="step"><div class="k">After</div><div class="v">Say thank you</div><small>Email your host and contact person. Relationships matter in this process.</small></div>
+    </div>
+  </section>
+
+  <!-- 12 · Where to find them -->
+  <section class="slide">
+    <div class="eyebrow">Where to find them</div>
+    <h2>Dozens of schools offer fly-ins</h2>
+    <p class="lead">Coast to coast. A few well-known programs to start your search:</p>
+    <div class="pill-row">
+      <span class="pill">Amherst · Access to Amherst</span>
+      <span class="pill">Bowdoin · Explore Bowdoin</span>
+      <span class="pill">Carleton · Taste of Carleton</span>
+      <span class="pill">Colgate · FOCUS</span>
+      <span class="pill">Davidson · Access Davidson</span>
+      <span class="pill">Haverford · Have A Look</span>
+      <span class="pill">Kenyon · KEEP</span>
+      <span class="pill">Case Western · DIP</span>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Search "<strong>[school name] fly-in program</strong>" or "diversity visit program," and check each school's admissions "Visit" page for deadlines — many are in the fall.</p>
+  </section>
+
+  <!-- 13 · Part 2 divider -->
+  <section class="slide title-slide accent-green" style="background:linear-gradient(135deg,#047857,#10b981)">
+    <div class="badge">💰 Part 2</div>
+    <h1>Scholarships</h1>
+    <p class="sub">Free money for college that you never have to pay back. Let's go get it.</p>
+  </section>
+
+  <!-- 14 · What are scholarships -->
+  <section class="slide">
+    <div class="eyebrow">Know the difference</div>
+    <h2>Scholarships vs. everything else</h2>
+    <div class="cards">
+      <div class="card money"><h3>🎁 Scholarships</h3><p>Free money. Never repaid. Based on merit, need, or a quality you have.</p></div>
+      <div class="card money"><h3>💵 Grants</h3><p>Also free, usually based on financial need — often from the college or government.</p></div>
+      <div class="card gold"><h3>🧑‍💻 Work-study</h3><p>Money you earn from a job while you're enrolled in college.</p></div>
+      <div class="card warn"><h3>⚠️ Loans</h3><p>Borrowed money that <strong>must be repaid</strong>, usually with interest. Not free.</p></div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Chase the free money first. Every scholarship dollar is a dollar you don't borrow.</p>
+  </section>
+
+  <!-- 15 · Three categories -->
+  <section class="slide">
+    <div class="eyebrow">Where scholarships come from</div>
+    <h2>Three main sources</h2>
+    <div class="cards">
+      <div class="card money"><h3>🏛️ Institutional</h3><p>From the colleges themselves — the <strong>biggest</strong> source. Often automatic with your application.</p></div>
+      <div class="card money"><h3>🌎 Private / national</h3><p>Companies, foundations, and nonprofits. Bigger awards, more applicants.</p></div>
+      <div class="card gold"><h3>🏘️ Local</h3><p>Businesses, clubs, and community groups near you. Smaller — but way less competition.</p></div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem"><strong>Hot tip:</strong> read the financial aid + scholarship page of <em>every</em> college you apply to. Don't leave money on the table.</p>
+  </section>
+
+  <!-- 16 · What readers look for -->
+  <section class="slide">
+    <div class="eyebrow">What readers reward</div>
+    <h2>Merit, need, or something that's just… you</h2>
+    <p class="lead">Anyone can create a scholarship for anything. They're commonly based on:</p>
+    <ul>
+      <li><strong>Academic merit</strong> — top of the pool in academics, athletics, or the arts.</li>
+      <li><strong>Merit + a quality</strong> — great grades <em>and</em> a specific talent or trait.</li>
+      <li><strong>A quality, talent, or characteristic</strong> — sometimes on its own.</li>
+      <li><strong>Financial need</strong> — helping students who need it most.</li>
+    </ul>
+    <p class="lead" style="margin-top:1rem">Think broadly about <strong>all</strong> your qualities — background, hobbies, heritage, where a parent works. There's a scholarship for almost everything.</p>
+  </section>
+
+  <!-- 17 · Find them: steps 1-5 -->
+  <section class="slide">
+    <div class="eyebrow">How to find them · part 1</div>
+    <h2>Build your list</h2>
+    <div class="steps">
+      <div class="step"><div class="k">1</div><div class="v">Start early</div><small>Some open before grade 12. Grade 12? Tons have spring deadlines — keep going.</small></div>
+      <div class="step"><div class="k">2</div><div class="v">Think broadly</div><small>List every positive attribute you have, then search databases with those keywords.</small></div>
+      <div class="step"><div class="k">3</div><div class="v">Do research</div><small>Think local AND national. Use trusted sources. <strong>Never pay</strong> for a scholarship search.</small></div>
+      <div class="step"><div class="k">4</div><div class="v">Fit over quantity</div><small>Prioritize ones that feel tailor-made for you before the giant general ones.</small></div>
+      <div class="step"><div class="k">5</div><div class="v">Read the details</div><small>Meet every requirement exactly. Hyper-specific scholarships often go unclaimed.</small></div>
+      <div class="step"><div class="k">—</div><div class="v">Rule of thumb</div><small>Easy to apply = lots of competition. Specific + effort = better odds for you.</small></div>
+    </div>
+  </section>
+
+  <!-- 18 · Find them: steps 6-10 -->
+  <section class="slide">
+    <div class="eyebrow">How to find them · part 2</div>
+    <h2>Stay organized &amp; keep going</h2>
+    <div class="steps">
+      <div class="step"><div class="k">6</div><div class="v">Get organized</div><small>Use a tracker. Consider a dedicated email just for scholarships so nothing gets lost.</small></div>
+      <div class="step"><div class="k">7</div><div class="v">Recycle essays</div><small>Reuse and adapt your app essays + rec letters. Make your writing work twice.</small></div>
+      <div class="step"><div class="k">8</div><div class="v">Ask for help</div><small>Counselors, teachers, coaches, relatives. Turn "what's next?" into "know any scholarships?"</small></div>
+      <div class="step"><div class="k">9</div><div class="v">Keep applying</div><small>Many let you apply once you're already in college. The game doesn't stop at senior year.</small></div>
+      <div class="step"><div class="k">10</div><div class="v">Stay on top</div><small>Track who's replied. Check sites for finalist + notification dates.</small></div>
+      <div class="step"><div class="k">🔁</div><div class="v">Adapt · reuse</div><small>Save your best paragraphs in one doc. Copy, tailor to the prompt, submit.</small></div>
+    </div>
+  </section>
+
+  <!-- 19 · The tracker -->
+  <section class="slide">
+    <div class="eyebrow">Build this today</div>
+    <h2>Your scholarship tracker</h2>
+    <p class="lead">One spreadsheet keeps you from missing deadlines and free money. Columns to include:</p>
+    <div class="template">
+      <p><span class="hl">Scholarship name</span> · <span class="hl">Amount</span> · <span class="hl">Deadline</span> · <span class="hl">Requirements</span> · <span class="hl">Essay needed?</span> · <span class="hl">Status</span> · <span class="hl">Submitted date</span> · <span class="hl">Result</span></p>
+      <p style="margin-top:.4rem;color:var(--slate-500);font-size:.98rem">Sort by deadline. Color-code status: not started → in progress → submitted → won. Check it weekly.</p>
+    </div>
+    <div class="pill-row"><span class="pill">Sort by deadline</span><span class="pill">Dedicated email</span><span class="pill">Review weekly</span><span class="pill">Never miss a date</span></div>
+  </section>
+
+  <!-- 20 · Local gold mine -->
+  <section class="slide accent-green">
+    <div class="eyebrow">The untapped gold mine</div>
+    <h2>Don't sleep on local scholarships</h2>
+    <p class="lead">Smaller awards, but <strong>far fewer applicants</strong> — and they add up fast.</p>
+    <div class="stats">
+      <div class="stat"><div class="big">$500–$1k</div><div class="lbl">Typical local award — win a few and it stacks up</div></div>
+      <div class="stat"><div class="big">Fewer</div><div class="lbl">applicants than national ones = better odds</div></div>
+      <div class="stat"><div class="big">Local</div><div class="lbl">businesses, Rotary, Kiwanis, faith &amp; cultural groups, your town's website</div></div>
+    </div>
+    <p class="lead" style="margin-top:1.2rem">Ask your counselor, teachers, and local businesses. Sometimes your question is what starts a new scholarship. 😉</p>
+  </section>
+
+  <!-- 21 · Scams -->
+  <section class="slide accent-red">
+    <div class="eyebrow">Protect yourself</div>
+    <h2>Spot the scams 🚩</h2>
+    <div class="compare">
+      <div class="box bad">
+        <h3>❌ Red flags — walk away</h3>
+        <ul>
+          <li>Asks you to <strong>pay</strong> a fee to apply or search</li>
+          <li>"Guaranteed" to win — no one can promise that</li>
+          <li>Wants your SSN or bank info up front</li>
+          <li>Pressures you to "act now"</li>
+        </ul>
+      </div>
+      <div class="box good">
+        <h3>✓ Legit scholarships</h3>
+        <ul>
+          <li>Always <strong>free</strong> to apply</li>
+          <li>Clear criteria and a real organization</li>
+          <li>Found via trusted databases or your school</li>
+          <li>Never ask for sensitive financial logins</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22 · Aid interaction -->
+  <section class="slide">
+    <div class="eyebrow">Good to know</div>
+    <h2>Outside scholarships + your aid</h2>
+    <p class="lead">You must report all outside scholarships to your school. Here's the key formula:</p>
+    <div class="template">
+      <p style="font-size:1.15rem;text-align:center;font-weight:700;color:var(--amber-dark)">
+        <span class="hl">Cost of Attendance</span> − <span class="hl">Expected Family Contribution</span> = <span class="hl">Calculated Need</span>
+      </p>
+    </div>
+    <ul style="margin-top:1rem">
+      <li>If there's a <strong>gap</strong> in your aid, outside scholarships usually fill it first — great news.</li>
+      <li>If your need is already fully met, new scholarships may <strong>reduce loans first</strong> (also good!).</li>
+      <li>You generally can't be awarded more than your total cost of attendance.</li>
+    </ul>
+  </section>
+
+  <!-- 23 · Remember -->
+  <section class="slide title-slide" style="background:linear-gradient(135deg,#b45309,#d97706)">
+    <div class="badge">Remember</div>
+    <p class="quote">Cost should never decide where you go.
+      <span class="by">Fly-ins get you there. Scholarships help you stay. Start early, stay organized, and keep applying.</span></p>
+  </section>
+
+  <!-- 24 · Workshop -->
+  <section class="slide">
+    <div class="eyebrow">Workshop · hands-on today</div>
+    <h2>🛠️ Build your systems</h2>
+    <div class="cards">
+      <div class="card"><h3>✈️ Fly-in list</h3><p>Find 3 fly-in programs you qualify for. Note deadlines + requirements.</p></div>
+      <div class="card"><h3>📊 Scholarship tracker</h3><p>Set up your spreadsheet and add the first 5 scholarships you find.</p></div>
+      <div class="card"><h3>✍️ Reusable essay</h3><p>Draft one flexible "why I deserve this" paragraph you can adapt.</p></div>
+    </div>
+    <div class="pill-row"><span class="pill">Search databases</span><span class="pill">Add deadlines to a calendar</span><span class="pill">Make a scholarship email</span></div>
+  </section>
+
+  <!-- 25 · Homework -->
+  <section class="slide">
+    <div class="eyebrow">Homework</div>
+    <h2>Before next Saturday</h2>
+    <ul>
+      <li>Apply to (or start) <strong>at least one fly-in program</strong> you qualify for.</li>
+      <li>Add <strong>5+ scholarships</strong> to your tracker, sorted by deadline.</li>
+      <li>Ask <strong>one adult</strong> (counselor, teacher, family) if they know a local scholarship.</li>
+      <li>Turn what you've <strong>drafted so far</strong> into a reusable scholarship essay.</li>
+    </ul>
+    <div>
+      <span class="resource">✈️ CEG: Fly-In Programs Guide</span>
+      <span class="resource">💰 CEG: How to Apply for Scholarships</span>
+    </div>
+  </section>
+
+  <!-- 26 · Up next -->
+  <section class="slide title-slide">
+    <div class="badge">Up next</div>
+    <h1>Week 4: Career + College Transition 🎓</h1>
+    <p class="sub">Connecting college to career, the "hidden curriculum," and a first-gen panel.</p>
+    <p class="meta">Bring your tracker + any questions. See you Saturday. 🌟</p>
+  </section>
+
+</div>
+
+<div class="hint">← → to navigate · F fullscreen</div>
+<div class="counter"><span id="cur">1</span> / <span id="total">29</span></div>
+<div class="nav"><button id="prev">‹</button><button id="next">›</button></div>
+<div class="progress" id="bar"></div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  let i = 0;
+  const total = slides.length;
+  document.getElementById('total').textContent = total;
+  function show(n){
+    i = Math.max(0, Math.min(total-1, n));
+    slides.forEach((s,x)=>s.classList.toggle('active', x===i));
+    document.getElementById('cur').textContent = i+1;
+    document.getElementById('bar').style.width = ((i+1)/total*100)+'%';
+    document.getElementById('prev').disabled = i===0;
+    document.getElementById('next').disabled = i===total-1;
+  }
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')show(i+1);
+    if(e.key==='ArrowLeft')show(i-1);
+    if(e.key==='Home')show(0); if(e.key==='End')show(total-1);
+    if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+  });
+  show(0);
+</script>
+</body>
+</html>
