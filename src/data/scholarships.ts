@@ -213,19 +213,6 @@ export const scholarships: Scholarship[] = [
       'Black students pursuing engineering and technical majors. Membership required.',
   },
   {
-    name: 'National Black Nurses Association (NBNA) Scholarships',
-    provider: 'NBNA',
-    amount: '$1,000+',
-    deadline: 'Spring',
-    identities: ['Black / African American'],
-    income: 'No income requirement',
-    basis: 'Merit-based',
-    field: 'Nursing',
-    link: 'https://nbna.org/programs-committees/programs/scholarships/',
-    description:
-      'Black nursing students (LPN to Doctorate) who are NBNA members.',
-  },
-  {
     name: 'NABJ Scholarships',
     provider: 'National Association of Black Journalists',
     amount: '~$2,500',
@@ -509,32 +496,6 @@ export const scholarships: Scholarship[] = [
       'Scholarships for Hispanic/Latinx undergraduates in NYC and the tri-state area; requires financial need and community involvement.',
   },
   {
-    name: 'The Opportunity Network Fellows Program',
-    provider: 'The Opportunity Network',
-    amount: 'College & career program + support',
-    deadline: '10th grade (NYC)',
-    identities: ['Students of Color (any)'],
-    income: 'Low income',
-    basis: 'Need + Merit',
-    field: 'NYC',
-    link: 'https://opportunitynetwork.org/',
-    description:
-      'Six-year college and career prep for high-achieving, low-income NYC students from underrepresented backgrounds, with mentorship and paid internships.',
-  },
-  {
-    name: 'Prep for Prep',
-    provider: 'Prep for Prep',
-    amount: 'Academic + college support',
-    deadline: 'Grades 5–6 (NYC)',
-    identities: ['Students of Color (any)'],
-    income: 'Low–Middle income',
-    basis: 'Merit-based',
-    field: 'NYC',
-    link: 'https://www.prepforprep.org/',
-    description:
-      'Leadership pipeline for NYC students of color — access to top schools plus significant academic, financial, and college counseling support.',
-  },
-  {
     name: 'La Unidad Latina Foundation Scholarship',
     provider: 'La Unidad Latina Foundation',
     amount: '$250–$1,000',
@@ -563,19 +524,6 @@ export const scholarships: Scholarship[] = [
 
   // ---- Discipline / major based ----
   {
-    name: 'AICPA Scholarship for Minority Accounting Students',
-    provider: 'AICPA Foundation',
-    amount: 'Up to $5,000–$10,000',
-    deadline: 'Mid-March',
-    identities: ['Black / African American', 'Hispanic / Latino', 'Native American / Indigenous', 'Asian / Pacific Islander'],
-    income: 'No income requirement',
-    basis: 'Merit-based',
-    field: 'Accounting',
-    link: 'https://www.thiswaytocpa.com/education/aicpa-legacy-scholarships/',
-    description:
-      'Students of color pursuing accounting (3.0+ GPA). One application covers multiple AICPA Legacy scholarships.',
-  },
-  {
     name: 'Emma Bowen Foundation Fellowship',
     provider: 'Emma Bowen Foundation',
     amount: 'Paid multi-year internship + stipend',
@@ -587,32 +535,6 @@ export const scholarships: Scholarship[] = [
     link: 'https://www.emmabowenfoundation.com/',
     description:
       'Students of color get paid multi-year summer internships in media, tech, and business, plus networking and career development.',
-  },
-  {
-    name: 'INROADS Internship Program',
-    provider: 'INROADS',
-    amount: 'Paid internships + training',
-    deadline: 'Varies',
-    identities: ['Students of Color (any)'],
-    income: 'No income requirement',
-    basis: 'Merit-based',
-    field: 'Business / STEM',
-    link: 'https://inroads.org/',
-    description:
-      'Leadership training and paid internships for high-potential students of color across business, STEM, and more.',
-  },
-  {
-    name: 'Management Leadership for Tomorrow (MLT)',
-    provider: 'MLT',
-    amount: 'Fellowship + career coaching',
-    deadline: 'Varies by program',
-    identities: ['Black / African American', 'Hispanic / Latino', 'Native American / Indigenous'],
-    income: 'No income requirement',
-    basis: 'Merit-based',
-    field: 'Business',
-    link: 'https://mlt.org/',
-    description:
-      'Career prep, coaching, and networking for Black, Latinx, and Native American students pursuing business and leadership careers.',
   },
   {
     name: 'AISES Scholarships',
@@ -641,19 +563,6 @@ export const scholarships: Scholarship[] = [
       'Women (including women of color) in engineering, computing, and tech. One application covers many awards.',
   },
   {
-    name: 'GEM Fellowship',
-    provider: 'The National GEM Consortium',
-    amount: 'Full tuition + paid internship (grad)',
-    deadline: 'November',
-    identities: ['Black / African American', 'Hispanic / Latino', 'Native American / Indigenous'],
-    income: 'No income requirement',
-    basis: 'Merit-based',
-    field: 'Graduate STEM',
-    link: 'https://www.gemfellowship.org/',
-    description:
-      'Underrepresented minority students pursuing a master’s or PhD in engineering or science; full tuition plus paid summer internships.',
-  },
-  {
     name: 'Generation Google Scholarship',
     provider: 'Google',
     amount: '$10,000',
@@ -665,31 +574,5 @@ export const scholarships: Scholarship[] = [
     link: 'https://buildyourfuture.withgoogle.com/scholarships',
     description:
       'For students from historically underrepresented groups in tech pursuing computer science or related degrees.',
-  },
-  {
-    name: 'NAHN Scholarship',
-    provider: 'National Association of Hispanic Nurses',
-    amount: '$1,000–$5,000',
-    deadline: 'Spring',
-    identities: ['Hispanic / Latino'],
-    income: 'No income requirement',
-    basis: 'Merit-based',
-    field: 'Nursing',
-    link: 'https://nahnnet.org/scholarships',
-    description:
-      'Hispanic/Latino nursing students at any level; NAHN membership required.',
-  },
-  {
-    name: 'NABA Scholarships',
-    provider: 'National Association of Black Accountants',
-    amount: '$1,500–$10,000',
-    deadline: 'Winter',
-    identities: ['Black / African American'],
-    income: 'No income requirement',
-    basis: 'Merit-based',
-    field: 'Accounting / Finance',
-    link: 'https://www.nabainc.org/',
-    description:
-      'Black students pursuing accounting, finance, and business degrees; NABA membership required.',
   },
 ];
