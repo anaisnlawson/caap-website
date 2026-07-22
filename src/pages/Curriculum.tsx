@@ -100,6 +100,7 @@ export default function Curriculum() {
       title: 'Expanding Access — Fly-In Programs + Scholarships',
       emoji: '💰',
       color: '#f59e0b',
+      deck: '/decks/week3-flyins-scholarships.html',
       goals: [
         'Gain exposure to financial support options for college',
         'Explore fly-in program opportunities at colleges across the country',
