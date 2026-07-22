@@ -17,6 +17,7 @@ export default function Navbar() {
           <li><NavLink to="/timeline">Timeline</NavLink></li>
           <li><NavLink to="/curriculum">Curriculum</NavLink></li>
           <li><NavLink to="/mentorship">Mentorship</NavLink></li>
+          <li><NavLink to="/scholarships">Scholarships</NavLink></li>
           <li><NavLink to="/faq">FAQ</NavLink></li>
         </ul>
       </div>

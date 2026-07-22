@@ -1,0 +1,326 @@
+.scholarships-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+
+.sch-hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.sch-hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+}
+
+.sch-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  color: #64748b;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ---- Filters ---- */
+.sch-filters {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sch-search {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.sch-search:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.sch-selects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.sch-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.sch-field span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.sch-field select {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  background: white;
+  cursor: pointer;
+}
+
+.sch-field select:disabled {
+  background: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.sch-field select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.sch-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.sch-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.sch-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #3b82f6;
+  cursor: pointer;
+}
+
+.sch-reset {
+  background: none;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sch-reset:hover {
+  border-color: #3b82f6;
+  color: #1e3a8a;
+  background: #eff6ff;
+}
+
+.sch-count {
+  font-family: 'Inter', sans-serif;
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 0 0 1.25rem;
+}
+
+/* ---- Cards ---- */
+.sch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.sch-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.sch-card:hover {
+  border-color: #93c5fd;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.12);
+}
+
+.sch-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.sch-card-head h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.badge {
+  flex-shrink: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge-merit {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.badge-need {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge-both {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.sch-provider {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin: 0 0 0.75rem;
+}
+
+.sch-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.sch-meta {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sch-meta li {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: #475569;
+}
+
+.sch-meta strong {
+  color: #1e293b;
+}
+
+.sch-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.sch-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #475569;
+  background: #f1f5f9;
+  border-radius: 6px;
+  padding: 0.25rem 0.55rem;
+}
+
+.sch-link {
+  margin-top: auto;
+  align-self: flex-start;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  text-decoration: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  background: #eff6ff;
+  transition: all 0.2s ease;
+}
+
+.sch-link:hover {
+  background: #dbeafe;
+}
+
+/* ---- Empty / disclaimer ---- */
+.sch-empty {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  color: #64748b;
+  padding: 2rem 0;
+}
+
+.sch-linkbtn {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.sch-disclaimer {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 2.5rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .sch-hero h1 {
+    font-size: 2rem;
+  }
+
+  .sch-selects {
+    grid-template-columns: 1fr;
+  }
+
+  .sch-grid {
+    grid-template-columns: 1fr;
+  }
+}
