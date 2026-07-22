@@ -151,6 +151,19 @@ export const scholarships: Scholarship[] = [
 
   // ---- Black / African American ----
   {
+    name: 'Blacks at Microsoft (BAM) Scholarship',
+    provider: 'Blacks at Microsoft (Microsoft)',
+    amount: '$2,500 one-time, or $5,000/yr renewable (up to $20k)',
+    deadline: 'Mid-March',
+    identities: ['Black / African American'],
+    income: 'Low–Middle income',
+    basis: 'Need + Merit',
+    field: 'Tech / Business',
+    link: 'https://www.microsoft.com/en-us/diversity/programs/blacks-scholarships',
+    description:
+      'High school seniors of African descent heading to a 4-year US college full-time in Engineering, Computer Science, Computer Information Systems, Business, Finance, or Marketing. 3.0+ GPA, passion for tech, leadership, and financial need.',
+  },
+  {
     name: 'UNCF (United Negro College Fund) Scholarships',
     provider: 'UNCF',
     amount: '$2,000–$15,000',
