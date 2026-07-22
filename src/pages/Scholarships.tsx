@@ -69,8 +69,9 @@ export default function Scholarships() {
       <section className="sch-hero">
         <h1>Scholarship Finder 🎓</h1>
         <p className="sch-subtitle">
-          Search scholarships for Black &amp; Brown students by identity, income
-          level, or find merit-based awards with no income requirement.
+          Scholarships for Black &amp; Brown high school seniors applying to
+          college. Search by identity, income level, or find merit-based awards
+          with no income requirement.
         </p>
       </section>
 
