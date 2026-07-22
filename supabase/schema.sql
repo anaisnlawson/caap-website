@@ -14,6 +14,12 @@ create table if not exists public.tracker_docs (
 -- Row Level Security: students can only read/write their own documents.
 alter table public.tracker_docs enable row level security;
 
+-- Table privileges (layer 1): allow signed-in students to use the table via the
+-- Data API. We intentionally grant ONLY the `authenticated` role, never `anon`,
+-- so no one who isn't logged in can touch this table. Row-level access is then
+-- further restricted to each student's own rows by the RLS policies below.
+grant select, insert, update, delete on public.tracker_docs to authenticated;
+
 drop policy if exists "own docs - select" on public.tracker_docs;
 create policy "own docs - select"
   on public.tracker_docs for select
