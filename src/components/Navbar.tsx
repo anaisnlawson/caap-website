@@ -3,7 +3,7 @@ import { useAuth } from '../auth/useAuth';
 import './Navbar.css';
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const { user, isAdmin, isMentor } = useAuth();
 
   return (
     <nav className="navbar">
@@ -21,6 +21,12 @@ export default function Navbar() {
           <li><NavLink to="/curriculum">Curriculum</NavLink></li>
           <li><NavLink to="/mentorship">Mentorship</NavLink></li>
           <li><NavLink to="/faq">FAQ</NavLink></li>
+          {isAdmin && (
+            <li><NavLink to="/admin">Admin</NavLink></li>
+          )}
+          {isMentor && !isAdmin && (
+            <li><NavLink to="/mentor">Mentor View</NavLink></li>
+          )}
           <li>
             <NavLink
               to={user ? '/dashboard' : '/login'}
