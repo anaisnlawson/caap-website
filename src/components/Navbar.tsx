@@ -27,6 +27,9 @@ export default function Navbar() {
           {isMentor && !isAdmin && (
             <li><NavLink to="/mentor">Mentor View</NavLink></li>
           )}
+          {!user && (
+            <li><NavLink to="/staff-login">Mentor / Admin</NavLink></li>
+          )}
           <li>
             <NavLink
               to={user ? '/dashboard' : '/login'}
