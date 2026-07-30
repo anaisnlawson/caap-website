@@ -5,14 +5,46 @@ import type { GridColumn } from '../components/SpreadsheetGrid';
  * Dashboard (editable) and the Admin view (read-only) so the two stay in sync.
  */
 
-export type TabKey = 'progress' | 'colleges' | 'essays' | 'deadlines';
+export type TabKey = 'progress' | 'colleges' | 'essays' | 'deadlines' | 'academics';
 
 export const TABS: { key: TabKey; label: string; icon: string }[] = [
   { key: 'progress', label: 'My Progress', icon: '📋' },
+  { key: 'academics', label: 'Academics', icon: '🎓' },
   { key: 'colleges', label: 'College List', icon: '🏫' },
   { key: 'essays', label: 'Essays', icon: '✍️' },
   { key: 'deadlines', label: 'Deadlines', icon: '🗓️' },
 ];
+
+/**
+ * A student's academic snapshot: SAT section scores (Evidence-Based Reading &
+ * Writing + Math), weighted/unweighted GPA, and intended majors. Stored as its
+ * own `academics` tracker doc so admins can see it and mentors cannot.
+ */
+export interface AcademicProfile {
+  satEBRW: string;
+  satMath: string;
+  gpaUnweighted: string;
+  gpaWeighted: string;
+  majors: string;
+}
+
+export const EMPTY_ACADEMICS: AcademicProfile = {
+  satEBRW: '',
+  satMath: '',
+  gpaUnweighted: '',
+  gpaWeighted: '',
+  majors: '',
+};
+
+/** SAT total = EBRW + Math. Returns null when neither section is filled in. */
+export function satTotal(a: AcademicProfile): number | null {
+  const ebrw = parseInt(a.satEBRW, 10);
+  const math = parseInt(a.satMath, 10);
+  const hasEbrw = !Number.isNaN(ebrw);
+  const hasMath = !Number.isNaN(math);
+  if (!hasEbrw && !hasMath) return null;
+  return (hasEbrw ? ebrw : 0) + (hasMath ? math : 0);
+}
 
 // Checklist derived from the 4-week CAAP curriculum.
 export const CHECKLIST: {

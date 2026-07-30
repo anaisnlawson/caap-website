@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../auth/useAuth';
 import SpreadsheetGrid, { type GridRow } from '../components/SpreadsheetGrid';
 import MentorSharing from '../components/MentorSharing';
+import AcademicsPanel from '../components/AcademicsPanel';
 import { useTrackerDoc, type SaveStatus } from '../lib/useTrackerDoc';
 import {
   TABS,
@@ -9,6 +10,8 @@ import {
   COLLEGE_COLUMNS,
   ESSAY_COLUMNS,
   DEADLINE_COLUMNS,
+  EMPTY_ACADEMICS,
+  type AcademicProfile,
   type TabKey,
 } from '../lib/trackerConfig';
 import './Dashboard.css';
@@ -48,6 +51,8 @@ export default function Dashboard() {
     'deadlines',
     [],
   );
+  const [academics, setAcademics, academicsStatus] =
+    useTrackerDoc<AcademicProfile>(uid, 'academics', EMPTY_ACADEMICS);
 
   const totalItems = CHECKLIST.reduce((n, g) => n + g.items.length, 0);
   const doneItems = Object.values(checked).filter(Boolean).length;
@@ -123,8 +128,21 @@ export default function Dashboard() {
           </div>
         )}
 
-        {tab === 'colleges' && (
+        {tab === 'academics' && (
           <div>
+            <div className="panel-head">
+              <h2>Academics</h2>
+              <SaveBadge status={academicsStatus} />
+            </div>
+            <p className="panel-sub">
+              Your SAT scores, GPA, and the majors you're interested in. Your
+              CAAP admin can see this to help guide your college list.
+            </p>
+            <AcademicsPanel value={academics} onChange={setAcademics} />
+          </div>
+        )}
+
+        {tab === 'colleges' && (          <div>
             <div className="panel-head">
               <h2>College List</h2>
               <SaveBadge status={collegeStatus} />

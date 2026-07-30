@@ -1,0 +1,91 @@
+.acad {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.acad-group h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.acad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.acad-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.acad-field > span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.acad-input {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+.acad-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.acad-input:disabled {
+  background: #f9fafb;
+  color: #111827;
+  -webkit-text-fill-color: #111827;
+  opacity: 1;
+}
+
+.acad-total .acad-total-value {
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #3730a3;
+}
+
+.acad-total-value small {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6366f1;
+}
+
+.acad-textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  background: #fff;
+}
+
+.acad-textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.acad-textarea:disabled {
+  background: #f9fafb;
+  color: #111827;
+  -webkit-text-fill-color: #111827;
+  opacity: 1;
+}
