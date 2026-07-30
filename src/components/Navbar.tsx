@@ -32,7 +32,7 @@ export default function Navbar() {
               to={user ? '/dashboard' : '/login'}
               className="nav-cta"
             >
-              {user ? 'My Tracker' : 'Student Login'}
+              {user ? 'My Tracker' : 'Log In'}
             </NavLink>
           </li>
         </ul>

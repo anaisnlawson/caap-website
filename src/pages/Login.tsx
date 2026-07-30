@@ -8,7 +8,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) navigate('/dashboard', { replace: true });
+    if (user) navigate('/me', { replace: true });
   }, [user, navigate]);
 
   return (
@@ -20,15 +20,15 @@ export default function Login() {
           <span className="brand-a2">A</span>
           <span className="brand-p">P</span>
         </div>
-        <h1>Student Sign In</h1>
+        <h1>Sign In</h1>
         <p className="login-sub">
-          Sign in with your school Google account to access your personal
-          college-application tracker.
+          Sign in with your Google account. Students get their college-application
+          tracker; mentors and admins are taken to their review view automatically.
         </p>
 
         {error && <div className="login-error">{error}</div>}
 
-        <button className="google-btn" onClick={() => void signInWithGoogle()}>
+        <button className="google-btn" onClick={() => void signInWithGoogle('/me')}>
           <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
             <path
               fill="#FFC107"
