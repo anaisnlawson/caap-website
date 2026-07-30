@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -9,8 +9,7 @@ import Mentorship from './pages/Mentorship';
 import Scholarships from './pages/Scholarships';
 import FAQ from './pages/FAQ';
 import Login from './pages/Login';
-import StaffLogin from './pages/StaffLogin';
-import StaffLanding from './pages/StaffLanding';
+import RoleLanding from './pages/RoleLanding';
 import Dashboard from './pages/Dashboard';
 import StaffView from './pages/StaffView';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -30,15 +29,17 @@ function App() {
           <Route path="/scholarships" element={<Scholarships />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/staff-login" element={<StaffLogin />} />
+          {/* Old separate staff entry points now fold into the single login. */}
+          <Route path="/staff-login" element={<Navigate to="/login" replace />} />
           <Route
-            path="/staff"
+            path="/me"
             element={
               <ProtectedRoute>
-                <StaffLanding />
+                <RoleLanding />
               </ProtectedRoute>
             }
           />
+          <Route path="/staff" element={<Navigate to="/me" replace />} />
           <Route
             path="/dashboard"
             element={
