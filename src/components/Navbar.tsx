@@ -1,7 +1,10 @@
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../auth/useAuth';
 import './Navbar.css';
 
 export default function Navbar() {
+  const { user } = useAuth();
+
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -19,6 +22,14 @@ export default function Navbar() {
           <li><NavLink to="/mentorship">Mentorship</NavLink></li>
           <li><NavLink to="/scholarships">Scholarships</NavLink></li>
           <li><NavLink to="/faq">FAQ</NavLink></li>
+          <li>
+            <NavLink
+              to={user ? '/dashboard' : '/login'}
+              className="nav-cta"
+            >
+              {user ? 'My Tracker' : 'Student Login'}
+            </NavLink>
+          </li>
         </ul>
       </div>
     </nav>

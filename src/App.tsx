@@ -8,6 +8,9 @@ import Curriculum from './pages/Curriculum';
 import Mentorship from './pages/Mentorship';
 import Scholarships from './pages/Scholarships';
 import FAQ from './pages/FAQ';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
 function App() {
@@ -23,6 +26,15 @@ function App() {
           <Route path="/mentorship" element={<Mentorship />} />
           <Route path="/scholarships" element={<Scholarships />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
       <Footer />

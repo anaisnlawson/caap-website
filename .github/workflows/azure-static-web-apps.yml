@@ -20,6 +20,12 @@ jobs:
           submodules: true
       - name: Build And Deploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          # Supabase values for the Vite build. The anon key is safe to be public
+          # (it already ships in the browser bundle); stored as GitHub repo variables.
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_ALLOWED_EMAIL_DOMAIN: ${{ vars.VITE_ALLOWED_EMAIL_DOMAIN }}
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
