@@ -60,6 +60,44 @@ When you deploy to Azure Static Web Apps, add the same three `VITE_...` values a
 build environment variables (Azure Portal → your Static Web App → **Configuration**,
 or in the GitHub Actions build workflow), so the production build picks them up.
 
+> **How this repo is wired:** `.github/workflows/azure-static-web-apps.yml`
+> passes `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, and
+> `VITE_ALLOWED_EMAIL_DOMAIN` from **GitHub repo variables** into the build.
+> Set them under **GitHub repo → Settings → Secrets and variables → Actions →
+> Variables**. The anon key is safe as a plain variable (it ships in the client
+> bundle either way). Deploys run automatically on push/merge to `master`.
+
+### 6. Production URLs (required for login on the live site)
+
+The deployed CAAP site runs at:
+
+- Custom domain: **https://www.caapnyc.org**
+- Azure default: **https://green-meadow-038fb720f.7.azurestaticapps.net**
+
+For Google sign-in to complete on production (not just localhost), these must be
+registered in two places:
+
+**Supabase → Authentication → URL Configuration**
+- **Site URL:** `https://www.caapnyc.org`
+- **Redirect URLs:**
+  ```
+  https://www.caapnyc.org/**
+  https://green-meadow-038fb720f.7.azurestaticapps.net/**
+  http://localhost:5173/**
+  ```
+
+**Google Cloud Console → OAuth client → Authorized JavaScript origins**
+```
+https://www.caapnyc.org
+https://green-meadow-038fb720f.7.azurestaticapps.net
+```
+The **Authorized redirect URI** stays the Supabase callback
+(`https://<project-ref>.supabase.co/auth/v1/callback`) — unchanged across
+environments.
+
+> If you add a new domain or a new Static Web Apps preview URL later, add it to
+> both lists above or sign-in will fail with a redirect error.
+
 ---
 
 ## What I built (already done)
