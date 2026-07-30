@@ -9,6 +9,8 @@ import Mentorship from './pages/Mentorship';
 import Scholarships from './pages/Scholarships';
 import FAQ from './pages/FAQ';
 import Login from './pages/Login';
+import StaffLogin from './pages/StaffLogin';
+import StaffLanding from './pages/StaffLanding';
 import Dashboard from './pages/Dashboard';
 import StaffView from './pages/StaffView';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -28,6 +30,15 @@ function App() {
           <Route path="/scholarships" element={<Scholarships />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/staff-login" element={<StaffLogin />} />
+          <Route
+            path="/staff"
+            element={
+              <ProtectedRoute>
+                <StaffLanding />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/dashboard"
             element={

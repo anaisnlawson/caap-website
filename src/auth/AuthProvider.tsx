@@ -116,32 +116,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [user]);
 
-  const signInWithGoogle = useCallback(async () => {
-    setError(null);
-    if (supabase) {
-      const { error: oauthError } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/dashboard`,
-          // Nudges Google to pre-select the school workspace account.
-          queryParams: allowedEmailDomain
-            ? { hd: allowedEmailDomain }
-            : undefined,
-        },
-      });
-      if (oauthError) setError(oauthError.message);
-      return;
-    }
+  const signInWithGoogle = useCallback(
+    async (redirectPath: string = '/dashboard') => {
+      setError(null);
+      if (supabase) {
+        const { error: oauthError } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${window.location.origin}${redirectPath}`,
+            // Nudges Google to pre-select the school workspace account.
+            queryParams: allowedEmailDomain
+              ? { hd: allowedEmailDomain }
+              : undefined,
+          },
+        });
+        if (oauthError) setError(oauthError.message);
+        return;
+      }
 
-    // Demo mode: fabricate a signed-in student locally.
-    const demoUser: AppUser = {
-      id: 'demo-student',
-      email: `student@${allowedEmailDomain ?? 'school.edu'}`,
-      name: 'Demo Student',
-    };
-    localStorage.setItem(DEMO_USER_KEY, JSON.stringify(demoUser));
-    setUser(demoUser);
-  }, []);
+      // Demo mode: fabricate a signed-in student locally.
+      const demoUser: AppUser = {
+        id: 'demo-student',
+        email: `student@${allowedEmailDomain ?? 'school.edu'}`,
+        name: 'Demo Student',
+      };
+      localStorage.setItem(DEMO_USER_KEY, JSON.stringify(demoUser));
+      setUser(demoUser);
+    },
+    [],
+  );
 
   const signOut = useCallback(async () => {
     setError(null);

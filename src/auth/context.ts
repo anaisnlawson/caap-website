@@ -18,7 +18,7 @@ export interface AuthContextValue {
   demoMode: boolean;
   /** Non-null when the last sign-in attempt was rejected (e.g. wrong domain). */
   error: string | null;
-  signInWithGoogle: () => Promise<void>;
+  signInWithGoogle: (redirectPath?: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
