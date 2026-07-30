@@ -116,10 +116,27 @@ create policy "admins read all profiles"
   using (public.is_admin());
 
 -- 3) Admins can read every student's tracker documents (read-only — no admin
---    insert/update/delete policy, so staff can view but not alter student work).
+--    insert/update policy, so staff can view but not alter student work).
 drop policy if exists "admins read all docs" on public.tracker_docs;
 create policy "admins read all docs"
   on public.tracker_docs for select
+  using (public.is_admin());
+
+-- 4) Admins can DELETE a student's data (the admin "remove student" action).
+--    This purges the student's tracker documents, profile row, and any mentor
+--    grants they created. It does NOT delete the underlying auth.users login
+--    (that needs the service role) — but with no profile/data the student drops
+--    off the roster, and if they ever sign in again they start fresh.
+grant delete on public.profiles to authenticated;
+
+drop policy if exists "admins delete all docs" on public.tracker_docs;
+create policy "admins delete all docs"
+  on public.tracker_docs for delete
+  using (public.is_admin());
+
+drop policy if exists "admins delete all profiles" on public.profiles;
+create policy "admins delete all profiles"
+  on public.profiles for delete
   using (public.is_admin());
 
 
@@ -155,6 +172,12 @@ drop policy if exists "student manages own grants - delete" on public.mentor_acc
 create policy "student manages own grants - delete"
   on public.mentor_access for delete
   using (auth.uid() = student_user_id);
+
+-- Admins can also delete a student's mentor grants (part of "remove student").
+drop policy if exists "admins delete mentor grants" on public.mentor_access;
+create policy "admins delete mentor grants"
+  on public.mentor_access for delete
+  using (public.is_admin());
 
 -- Does the caller mentor the given student? SECURITY DEFINER so the check works
 -- without exposing the mentor_access table to mentors directly.

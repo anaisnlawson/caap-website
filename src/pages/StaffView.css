@@ -100,7 +100,8 @@
 
 .detail-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
   margin-bottom: 0.5rem;
   flex-wrap: wrap;
@@ -115,6 +116,103 @@
 .detail-email {
   color: #94a3b8;
   font-size: 0.85rem;
+}
+
+.delete-student-btn {
+  background: #fff;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.delete-student-btn:hover {
+  background: #fef2f2;
+  border-color: #f87171;
+}
+
+/* Confirmation modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-card h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.modal-card p {
+  margin: 0 0 1rem;
+  color: #475569;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.modal-error {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.modal-cancel {
+  background: #fff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal-cancel:disabled,
+.modal-delete:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.modal-delete {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal-delete:hover:not(:disabled) {
+  background: #b91c1c;
 }
 
 .viewer-loading {

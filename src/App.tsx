@@ -57,6 +57,7 @@ function App() {
                   subtitle="Full read-only access to every student's tracker."
                   allowedTabs={['progress', 'academics', 'colleges', 'essays', 'deadlines']}
                   emptyHint="No students have signed in yet. Once a student logs in and starts their tracker, they'll appear here."
+                  canDelete
                 />
               </ProtectedRoute>
             }
