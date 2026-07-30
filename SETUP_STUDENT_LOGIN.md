@@ -110,8 +110,8 @@ There are three roles, all enforced at the database level by Row Level Security
 | **Mentor** | A student adds your email in their **Sharing** tab | **Read-only** access to *that student's* College List, Essays (incl. Google Doc links), and Deadlines. **Not** their Progress checklist. Only students who shared with you appear. |
 | **Admin** | Your email is in the `admins` table | **Read-only** access to **every** student's tracker, **all** tabs. |
 
-- **Admin nav:** signed-in admins see an **Admin** link → `/admin`.
-- **Mentor nav:** anyone a student shared with sees a **Mentor View** link → `/mentor`.
+- **Staff sign-in (private):** mentors and admins sign in at a **separate, unadvertised URL**: <https://www.caapnyc.org/staff-login>. It isn't linked anywhere on the student-facing site — bookmark it and share it only with staff. Signing in there routes you by role (admin → all students, mentor → your shared students). Any account that isn't an admin or a shared mentor gets a "No staff access" message.
+- **Staff nav:** once a staff member is signed in, an **Admin** or **Mentor View** link appears in the nav for them only. Students never see these links, and a student who visits `/admin` or `/mentor` directly is bounced back to their dashboard.
 - **Sharing:** students open their tracker → **Sharing** tab → add a mentor by the
   email that mentor signs in with. Removing them revokes access immediately.
 - **Essay Google Docs:** students paste a Google Doc share link in the Essays tab's
