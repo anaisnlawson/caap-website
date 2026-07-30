@@ -153,6 +153,60 @@ export async function listStudents(): Promise<StudentProfile[]> {
   }
 }
 
+/**
+ * Delete a student's data (admin only — enforced by the admin-delete RLS
+ * policies). Removes their tracker documents, mentor grants, and profile row so
+ * they disappear from the roster. Note: this does NOT remove the underlying
+ * Google/auth.users login (that requires Supabase's service role); if the same
+ * person signs in again they'll start with a fresh, empty tracker.
+ */
+export async function deleteStudent(
+  userId: string,
+): Promise<{ error?: string }> {
+  if (isSupabaseConfigured && supabase) {
+    const docs = await supabase
+      .from('tracker_docs')
+      .delete()
+      .eq('user_id', userId);
+    if (docs.error) {
+      console.error('deleteStudent (docs) failed:', docs.error.message);
+      return { error: docs.error.message };
+    }
+    // Best-effort: clear any mentor grants this student created.
+    await supabase
+      .from('mentor_access')
+      .delete()
+      .eq('student_user_id', userId);
+    const prof = await supabase
+      .from('profiles')
+      .delete()
+      .eq('user_id', userId);
+    if (prof.error) {
+      console.error('deleteStudent (profile) failed:', prof.error.message);
+      return { error: prof.error.message };
+    }
+    return {};
+  }
+
+  // Demo mode: wipe this user's localStorage docs + the demo user record.
+  try {
+    const toRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(`${LS_PREFIX}:${userId}:`)) toRemove.push(k);
+    }
+    toRemove.forEach((k) => localStorage.removeItem(k));
+    const raw = localStorage.getItem(DEMO_USER_KEY);
+    if (raw) {
+      const u = JSON.parse(raw) as { id: string };
+      if (u.id === userId) localStorage.removeItem(DEMO_USER_KEY);
+    }
+  } catch (e) {
+    console.error('deleteStudent (local) failed:', e);
+  }
+  return {};
+}
+
 // ---- Mentor sharing (student-controlled) ----
 
 function mentorsLsKey(userId: string): string {

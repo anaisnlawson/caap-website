@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { listStudents, type StudentProfile } from '../lib/db';
+import { listStudents, deleteStudent, type StudentProfile } from '../lib/db';
 import StudentTrackerView from '../components/StudentTrackerView';
 import type { TabKey } from '../lib/trackerConfig';
 import './StaffView.css';
@@ -9,6 +9,8 @@ interface StaffViewProps {
   subtitle: string;
   allowedTabs: TabKey[];
   emptyHint: string;
+  /** Admins only: show the "remove student" action + confirmation. */
+  canDelete?: boolean;
 }
 
 /**
@@ -23,10 +25,16 @@ export default function StaffView({
   subtitle,
   allowedTabs,
   emptyHint,
+  canDelete,
 }: StaffViewProps) {
   const [students, setStudents] = useState<StudentProfile[]>([]);
   const [selected, setSelected] = useState<StudentProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [pendingDelete, setPendingDelete] = useState<StudentProfile | null>(
+    null,
+  );
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -40,6 +48,27 @@ export default function StaffView({
       active = false;
     };
   }, []);
+
+  async function confirmDelete() {
+    if (!pendingDelete) return;
+    setDeleting(true);
+    setDeleteError(null);
+    const { error } = await deleteStudent(pendingDelete.user_id);
+    setDeleting(false);
+    if (error) {
+      setDeleteError(error);
+      return;
+    }
+    const removedId = pendingDelete.user_id;
+    setStudents((list) => {
+      const next = list.filter((s) => s.user_id !== removedId);
+      setSelected((cur) =>
+        cur && cur.user_id === removedId ? next[0] ?? null : cur,
+      );
+      return next;
+    });
+    setPendingDelete(null);
+  }
 
   return (
     <div className="staff">
@@ -77,8 +106,21 @@ export default function StaffView({
             {selected ? (
               <>
                 <div className="detail-head">
-                  <h2>{selected.name || selected.email}</h2>
-                  <span className="detail-email">{selected.email}</span>
+                  <div>
+                    <h2>{selected.name || selected.email}</h2>
+                    <span className="detail-email">{selected.email}</span>
+                  </div>
+                  {canDelete && (
+                    <button
+                      className="delete-student-btn"
+                      onClick={() => {
+                        setDeleteError(null);
+                        setPendingDelete(selected);
+                      }}
+                    >
+                      Delete student
+                    </button>
+                  )}
                 </div>
                 <StudentTrackerView
                   key={selected.user_id}
@@ -90,6 +132,41 @@ export default function StaffView({
               <p className="staff-loading">Select a student to view.</p>
             )}
           </main>
+        </div>
+      )}
+
+      {pendingDelete && (
+        <div
+          className="modal-overlay"
+          onClick={() => !deleting && setPendingDelete(null)}
+        >
+          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+            <h3>Delete this student?</h3>
+            <p>
+              You're about to permanently delete{' '}
+              <strong>{pendingDelete.name || pendingDelete.email}</strong> (
+              {pendingDelete.email}). This removes their entire tracker —
+              progress, academics, college list, essays, deadlines, and mentor
+              sharing. <strong>This can't be undone.</strong>
+            </p>
+            {deleteError && <div className="modal-error">{deleteError}</div>}
+            <div className="modal-actions">
+              <button
+                className="modal-cancel"
+                onClick={() => setPendingDelete(null)}
+                disabled={deleting}
+              >
+                Cancel
+              </button>
+              <button
+                className="modal-delete"
+                onClick={() => void confirmDelete()}
+                disabled={deleting}
+              >
+                {deleting ? 'Deleting…' : 'Delete student'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
