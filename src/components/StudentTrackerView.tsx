@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import SpreadsheetGrid, {
   type GridRow,
 } from '../components/SpreadsheetGrid';
+import AcademicsPanel from '../components/AcademicsPanel';
 import { loadDoc, type StudentProfile } from '../lib/db';
 import {
   CHECKLIST,
@@ -9,12 +10,15 @@ import {
   ESSAY_COLUMNS,
   DEADLINE_COLUMNS,
   TOTAL_CHECKLIST_ITEMS,
+  EMPTY_ACADEMICS,
+  type AcademicProfile,
   type TabKey,
 } from '../lib/trackerConfig';
 import '../pages/Dashboard.css';
 
 const ALL_VIEWER_TABS: { key: TabKey; label: string; icon: string }[] = [
   { key: 'progress', label: 'Progress', icon: '📋' },
+  { key: 'academics', label: 'Academics', icon: '🎓' },
   { key: 'colleges', label: 'College List', icon: '🏫' },
   { key: 'essays', label: 'Essays', icon: '✍️' },
   { key: 'deadlines', label: 'Deadlines', icon: '🗓️' },
@@ -39,6 +43,7 @@ export default function StudentTrackerView({
   const [tab, setTab] = useState<TabKey>(tabs[0]?.key ?? 'colleges');
 
   const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [academics, setAcademics] = useState<AcademicProfile>(EMPTY_ACADEMICS);
   const [colleges, setColleges] = useState<GridRow[]>([]);
   const [essays, setEssays] = useState<GridRow[]>([]);
   const [deadlines, setDeadlines] = useState<GridRow[]>([]);
@@ -51,6 +56,9 @@ export default function StudentTrackerView({
       allowedTabs.includes('progress')
         ? loadDoc<Record<string, boolean>>(id, 'progress', {})
         : Promise.resolve({}),
+      allowedTabs.includes('academics')
+        ? loadDoc<AcademicProfile>(id, 'academics', EMPTY_ACADEMICS)
+        : Promise.resolve(EMPTY_ACADEMICS),
       allowedTabs.includes('colleges')
         ? loadDoc<GridRow[]>(id, 'colleges', [])
         : Promise.resolve([]),
@@ -60,9 +68,10 @@ export default function StudentTrackerView({
       allowedTabs.includes('deadlines')
         ? loadDoc<GridRow[]>(id, 'deadlines', [])
         : Promise.resolve([]),
-    ]).then(([p, c, e, d]) => {
+    ]).then(([p, a, c, e, d]) => {
       if (!active) return;
       setChecked(p as Record<string, boolean>);
+      setAcademics(a as AcademicProfile);
       setColleges(c as GridRow[]);
       setEssays(e as GridRow[]);
       setDeadlines(d as GridRow[]);
@@ -123,6 +132,15 @@ export default function StudentTrackerView({
                   ))}
                 </div>
               ))}
+            </div>
+          )}
+
+          {tab === 'academics' && (
+            <div>
+              <div className="panel-head">
+                <h2>Academics</h2>
+              </div>
+              <AcademicsPanel value={academics} readOnly />
             </div>
           )}
 
