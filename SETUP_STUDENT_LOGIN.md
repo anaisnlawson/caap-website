@@ -2,6 +2,8 @@
 
 The site now has a **student login** and a personal **tracker dashboard**
 (`/dashboard`) with an editable spreadsheet grid whose data saves per student.
+It also has **role-based views** (see "Roles & sharing" below): an admin view for
+you, and a mentor view students can opt into.
 
 Right now it runs in **demo mode**: you can click **Student Login → Sign in with
 Google**, and it signs you in locally and saves data in your browser only. To
@@ -94,6 +96,51 @@ https://green-meadow-038fb720f.7.azurestaticapps.net
 The **Authorized redirect URI** stays the Supabase callback
 (`https://<project-ref>.supabase.co/auth/v1/callback`) — unchanged across
 environments.
+
+---
+
+## Roles & sharing
+
+There are three roles, all enforced at the database level by Row Level Security
+(not just hidden in the UI):
+
+| Role | How you become it | What you can see |
+|------|-------------------|------------------|
+| **Student** | Any signed-in user | Only their own tracker (all tabs), which they can edit. Can add/remove mentors. |
+| **Mentor** | A student adds your email in their **Sharing** tab | **Read-only** access to *that student's* College List, Essays (incl. Google Doc links), and Deadlines. **Not** their Progress checklist. Only students who shared with you appear. |
+| **Admin** | Your email is in the `admins` table | **Read-only** access to **every** student's tracker, **all** tabs. |
+
+- **Admin nav:** signed-in admins see an **Admin** link → `/admin`.
+- **Mentor nav:** anyone a student shared with sees a **Mentor View** link → `/mentor`.
+- **Sharing:** students open their tracker → **Sharing** tab → add a mentor by the
+  email that mentor signs in with. Removing them revokes access immediately.
+- **Essay Google Docs:** students paste a Google Doc share link in the Essays tab's
+  "Google Doc link" column. Mentors/admin see it as a clickable **Open link**.
+  Remind students to also set the Doc's own sharing (e.g. "Anyone with the link"
+  or share to the mentor's email) so it actually opens.
+
+### Setting the admin(s)
+
+The current admin is seeded in `supabase/schema.sql`:
+
+```sql
+insert into public.admins (email) values ('anaisnlawson@gmail.com')
+  on conflict (email) do nothing;
+```
+
+To add more admins later, run in Supabase SQL Editor:
+
+```sql
+insert into public.admins (email) values ('someone@example.com')
+  on conflict (email) do nothing;
+```
+
+### ⚠️ Re-run the schema after this update
+
+The roles/sharing feature adds new tables (`profiles`, `admins`, `mentor_access`)
+and policies. Open **SQL Editor → New query**, paste all of `supabase/schema.sql`
+again, and **Run**. It's idempotent (safe to re-run) — it only creates what's
+missing and refreshes the policies.
 
 > If you add a new domain or a new Static Web Apps preview URL later, add it to
 > both lists above or sign-in will fail with a redirect error.

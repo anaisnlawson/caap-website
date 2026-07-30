@@ -1,0 +1,132 @@
+.staff {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.staff-header h1 {
+  font-size: 1.9rem;
+  color: #0f172a;
+  margin: 0 0 0.3rem;
+}
+
+.staff-header p {
+  color: #64748b;
+  margin: 0 0 1.5rem;
+}
+
+.staff-loading,
+.staff-empty {
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.staff-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.staff-roster {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.85rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.roster-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+  margin: 0.3rem 0.4rem 0.6rem;
+}
+
+.staff-roster ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.roster-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  padding: 0.6rem 0.7rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  transition: background 0.15s ease;
+}
+
+.roster-item:hover {
+  background: #f1f5f9;
+}
+
+.roster-item.active {
+  background: #eff6ff;
+  box-shadow: inset 0 0 0 1px #bfdbfe;
+}
+
+.roster-name {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.92rem;
+}
+
+.roster-email {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.staff-detail {
+  min-width: 0;
+}
+
+.detail-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.detail-head h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.4rem;
+}
+
+.detail-email {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.viewer-loading {
+  color: #64748b;
+  padding: 1rem 0;
+}
+
+@media (max-width: 760px) {
+  .staff-body {
+    grid-template-columns: 1fr;
+  }
+  .staff-roster {
+    position: static;
+  }
+}

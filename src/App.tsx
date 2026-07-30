@@ -10,6 +10,7 @@ import Scholarships from './pages/Scholarships';
 import FAQ from './pages/FAQ';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import StaffView from './pages/StaffView';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
@@ -32,6 +33,32 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requireAdmin>
+                <StaffView
+                  title="Admin — All Students"
+                  subtitle="Full read-only access to every student's tracker."
+                  allowedTabs={['progress', 'colleges', 'essays', 'deadlines']}
+                  emptyHint="No students have signed in yet. Once a student logs in and starts their tracker, they'll appear here."
+                />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mentor"
+            element={
+              <ProtectedRoute requireStaff>
+                <StaffView
+                  title="Mentor View"
+                  subtitle="Read-only access to the students who shared their tracker with you."
+                  allowedTabs={['colleges', 'essays', 'deadlines']}
+                  emptyHint="No students have shared with you yet. A student can add you as a mentor from the Sharing tab of their tracker, using your sign-in email."
+                />
               </ProtectedRoute>
             }
           />

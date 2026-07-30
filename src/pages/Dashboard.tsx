@@ -1,89 +1,19 @@
 import { useState } from 'react';
 import { useAuth } from '../auth/useAuth';
-import SpreadsheetGrid, {
-  type GridColumn,
-  type GridRow,
-} from '../components/SpreadsheetGrid';
+import SpreadsheetGrid, { type GridRow } from '../components/SpreadsheetGrid';
+import MentorSharing from '../components/MentorSharing';
 import { useTrackerDoc, type SaveStatus } from '../lib/useTrackerDoc';
+import {
+  TABS,
+  CHECKLIST,
+  COLLEGE_COLUMNS,
+  ESSAY_COLUMNS,
+  DEADLINE_COLUMNS,
+  type TabKey,
+} from '../lib/trackerConfig';
 import './Dashboard.css';
 
-type TabKey = 'progress' | 'colleges' | 'essays' | 'deadlines';
-
-const TABS: { key: TabKey; label: string; icon: string }[] = [
-  { key: 'progress', label: 'My Progress', icon: '📋' },
-  { key: 'colleges', label: 'College List', icon: '🏫' },
-  { key: 'essays', label: 'Essays', icon: '✍️' },
-  { key: 'deadlines', label: 'Deadlines', icon: '🗓️' },
-];
-
-// Checklist derived from the 4-week CAAP curriculum.
-const CHECKLIST: { week: string; items: { id: string; label: string }[] }[] = [
-  {
-    week: 'Week 1 · College Strategy + Personal Narrative',
-    items: [
-      { id: 'w1-list', label: 'Build a college interest list' },
-      { id: 'w1-attrs', label: 'Identify attributes I want in a college' },
-      { id: 'w1-essay', label: 'Start personal statement draft' },
-    ],
-  },
-  {
-    week: 'Week 2 · Applications + Essays',
-    items: [
-      { id: 'w2-commonapp', label: 'Create Common App account' },
-      { id: 'w2-supp', label: 'List supplemental essays needed' },
-    ],
-  },
-  {
-    week: 'Week 3 · Financial Aid',
-    items: [
-      { id: 'w3-fafsa', label: 'Gather documents for FAFSA' },
-      { id: 'w3-scholar', label: 'Research 3 scholarships' },
-    ],
-  },
-  {
-    week: 'Week 4 · Finalizing + Mentorship',
-    items: [
-      { id: 'w4-review', label: 'Get essay reviewed by mentor' },
-      { id: 'w4-submit', label: 'Finalize application checklist' },
-    ],
-  },
-];
-
-const COLLEGE_COLUMNS: GridColumn[] = [
-  { key: 'school', label: 'School', width: '24%' },
-  {
-    key: 'type',
-    label: 'Type',
-    width: '14%',
-    options: ['Reach', 'Target', 'Safety'],
-  },
-  { key: 'deadline', label: 'Deadline', width: '16%' },
-  {
-    key: 'status',
-    label: 'Status',
-    width: '18%',
-    options: ['Researching', 'In progress', 'Submitted', 'Accepted', 'Waitlisted'],
-  },
-  { key: 'notes', label: 'Notes' },
-];
-
-const ESSAY_COLUMNS: GridColumn[] = [
-  { key: 'prompt', label: 'Essay / Prompt', width: '30%' },
-  { key: 'school', label: 'For School', width: '22%' },
-  {
-    key: 'status',
-    label: 'Status',
-    width: '18%',
-    options: ['Not started', 'Drafting', 'Revising', 'Reviewed', 'Final'],
-  },
-  { key: 'link', label: 'Doc link' },
-];
-
-const DEADLINE_COLUMNS: GridColumn[] = [
-  { key: 'item', label: 'Item', width: '45%' },
-  { key: 'date', label: 'Date', width: '25%' },
-  { key: 'done', label: 'Done?', width: '20%', options: ['No', 'Yes'] },
-];
+type DashTab = TabKey | 'sharing';
 
 function SaveBadge({ status }: { status: SaveStatus }) {
   if (status === 'idle') return null;
@@ -96,7 +26,7 @@ function SaveBadge({ status }: { status: SaveStatus }) {
 
 export default function Dashboard() {
   const { user, signOut, demoMode } = useAuth();
-  const [tab, setTab] = useState<TabKey>('progress');
+  const [tab, setTab] = useState<DashTab>('progress');
 
   const uid = user?.id ?? 'anon';
 
@@ -152,6 +82,12 @@ export default function Dashboard() {
             <span aria-hidden="true">{t.icon}</span> {t.label}
           </button>
         ))}
+        <button
+          className={`dash-tab ${tab === 'sharing' ? 'active' : ''}`}
+          onClick={() => setTab('sharing')}
+        >
+          <span aria-hidden="true">🤝</span> Sharing
+        </button>
       </nav>
 
       <section className="dash-panel">
@@ -240,6 +176,8 @@ export default function Dashboard() {
             />
           </div>
         )}
+
+        {tab === 'sharing' && <MentorSharing userId={uid} />}
       </section>
     </div>
   );

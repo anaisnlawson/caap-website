@@ -6,6 +6,7 @@ import {
   allowedEmailDomain,
 } from '../lib/supabase';
 import { AuthContext, type AppUser, type AuthContextValue } from './context';
+import { syncProfile, fetchIsAdmin, fetchIsMentor } from '../lib/db';
 
 const DEMO_USER_KEY = 'caap-tracker:demo-user';
 
@@ -29,6 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Only the Supabase path needs an async load, so start "loading" only then.
   const [loading, setLoading] = useState(isSupabaseConfigured);
   const [error, setError] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isMentor, setIsMentor] = useState(false);
 
   // ---- Real backend (Supabase) ----
   useEffect(() => {
@@ -75,6 +78,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  // Whenever the signed-in user changes, mirror their profile and resolve
+  // whether they're an admin. In demo mode, treat a signed-in user as admin so
+  // the admin view is previewable locally.
+  useEffect(() => {
+    let active = true;
+    if (!isSupabaseConfigured) {
+      // Demo mode: a signed-in user can preview the admin view.
+      Promise.resolve().then(() => {
+        if (!active) return;
+        setIsAdmin(!!user);
+        setIsMentor(false);
+      });
+      return () => {
+        active = false;
+      };
+    }
+    if (!user) {
+      Promise.resolve().then(() => {
+        if (!active) return;
+        setIsAdmin(false);
+        setIsMentor(false);
+      });
+      return () => {
+        active = false;
+      };
+    }
+    void syncProfile(user);
+    void fetchIsAdmin().then((admin) => {
+      if (active) setIsAdmin(admin);
+    });
+    void fetchIsMentor().then((mentor) => {
+      if (active) setIsMentor(mentor);
+    });
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
   const signInWithGoogle = useCallback(async () => {
     setError(null);
     if (supabase) {
@@ -113,8 +154,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<AuthContextValue>(
-    () => ({ user, loading, demoMode, error, signInWithGoogle, signOut }),
-    [user, loading, demoMode, error, signInWithGoogle, signOut],
+    () => ({
+      user,
+      loading,
+      isAdmin,
+      isMentor,
+      demoMode,
+      error,
+      signInWithGoogle,
+      signOut,
+    }),
+    [
+      user,
+      loading,
+      isAdmin,
+      isMentor,
+      demoMode,
+      error,
+      signInWithGoogle,
+      signOut,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
